@@ -1,4 +1,6 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode"; // import dependency
+import { SaveToStorage } from "./StorageService";
 
 export const login = async (credentials) => {
   try {
@@ -6,7 +8,19 @@ export const login = async (credentials) => {
       "http://localhost:5027/authenticate",
       credentials
     );
-    return response.data;
+    if (response.status === 200) {
+      const decodedJwt = jwtDecode(response.data.token);
+      const roles =
+        decodedJwt[
+          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+      const rolesArray = roles.split(",");
+      SaveToStorage("token", response.data.token);
+      SaveToStorage("roles", JSON.stringify(rolesArray));
+      return response.data.token;
+    } else {
+      throw new Error("Invalid username or password");
+    }
   } catch (error) {
     throw new Error("Login failed");
   }

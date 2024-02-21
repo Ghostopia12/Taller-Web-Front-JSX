@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { register } from "../../services/AuthService";
+import { GetFromStorage } from "../../services/StorageService";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,6 +23,22 @@ const Register = () => {
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
+
+  useEffect(() => {
+    document.title = "Community | Registro";
+
+    const token = GetFromStorage("token");
+    const roleList = GetFromStorage("roles");
+
+    const navigate = useNavigate();
+
+    //check if "ADMIN" is in the role list
+    if (roleList?.length!= 0 && !roleList?.includes("ADMIN")) {
+      navigate("/dashboard");
+    }
+    //Users without admin role can't access to this page
+
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

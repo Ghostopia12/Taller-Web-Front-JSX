@@ -23,12 +23,15 @@ const Login = () => {
         didOpen: () => {
           MySwal.showLoading()
         login({ username, password }).then((response) => {
-          console.log(response);
-          localStorage.setItem("token", response.token);
-          setTimeout(() => {
-          MySwal.close();
-            window.location.href = "/";
-          }, 1000)
+          if(response){
+            MySwal.fire({
+              icon: 'success',
+              title: 'Bienvenido',
+              text: 'Inicio de sesión exitoso',
+            }).then(() => {
+              navigate("/");
+            })
+          }
         }).catch((error) => {
           console.log(error);
           MySwal.fire({
