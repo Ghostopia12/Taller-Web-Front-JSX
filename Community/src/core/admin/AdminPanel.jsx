@@ -10,19 +10,14 @@ const AdminPanel = () => {
   const [roles, setRoles] = useState([]);
 
   const changeRole = (userId, roleName, checked) => {
-    //get the user from the users array
     const user = users.find(user => user.id === userId);
-    //get the role from the roles array
     const role = roles.find(role => role.nombre === roleName);
-    //if the role is checked, add it to the user
     if (checked) {
       user.roles.push(role);
     } else {
-      //if the role is unchecked, remove it from the user
       user.roles = user.roles.filter(userRole => userRole.nombre !== roleName);
     }
     console.log(JSON.stringify(user));
-    //update the user in the users array
     setusers(users.map(u => u.id === userId ? user : u));
     
   }
