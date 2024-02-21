@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import "./Register.css";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";

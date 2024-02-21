@@ -9,6 +9,15 @@ export const getHeaders = () => {
     }
 }
 
+export const UpdateUser = async (user) => {
+    try {
+        const response = await axios.put(`http://localhost:5027/api/Usuarios`, user , getHeaders());
+        return response.data;
+    } catch (error) {
+        throw new Error('UpdateUser failed');
+    }
+};
+
 export const GetUsers = async () => {
     try {
         const response = await axios.get('http://localhost:5027/api/Usuarios', getHeaders());
@@ -17,3 +26,4 @@ export const GetUsers = async () => {
         throw new Error('GetUsers failed');
     }
 }
+
