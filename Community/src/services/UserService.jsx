@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getHeaders = () => {
+export const getHeaders = () => {
     const token = localStorage.getItem('token');
     return {
         headers: {

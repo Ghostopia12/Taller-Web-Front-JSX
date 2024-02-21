@@ -28,7 +28,6 @@ const Register = () => {
   useEffect(() => {
     document.title = "Community | Registro";
 
-    const token = GetFromStorage("token");
     const roleList = GetFromStorage("roles");
 
 
