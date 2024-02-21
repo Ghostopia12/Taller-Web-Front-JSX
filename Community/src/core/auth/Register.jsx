@@ -23,6 +23,7 @@ const Register = () => {
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Community | Registro";
@@ -30,7 +31,6 @@ const Register = () => {
     const token = GetFromStorage("token");
     const roleList = GetFromStorage("roles");
 
-    const navigate = useNavigate();
 
     //check if "ADMIN" is in the role list
     if (roleList?.length!= 0 && !roleList?.includes("ADMIN")) {
@@ -40,7 +40,7 @@ const Register = () => {
 
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (validateFields()) {
       MySwal.fire({
