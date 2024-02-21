@@ -3,9 +3,24 @@ import { GetFromStorage } from "../../services/StorageService";
 import { useNavigate } from "react-router-dom";
 import { GetUsers } from "../../services/UserService";
 import "./style.css";
+import { GetRoles } from "../../services/RoleService";
 const AdminPanel = () => {
   const navigate = useNavigate();
   const [users, setusers] = useState([]);
+  const [roles, setRoles] = useState([]);
+
+  const changeRole = (userId, roleName, checked) => {
+    const user = users.find(user => user.id === userId);
+    const role = roles.find(role => role.nombre === roleName);
+    if (checked) {
+      user.roles.push(role);
+    } else {
+      user.roles = user.roles.filter(userRole => userRole.nombre !== roleName);
+    }
+    console.log(JSON.stringify(user));
+    setusers(users.map(u => u.id === userId ? user : u));
+    
+  }
 
   useEffect(() => {
     document.title = "Admin Panel";
@@ -14,41 +29,56 @@ const AdminPanel = () => {
       navigate("/dashboard");
     }
     GetUsers().then((response) => {
-        console.log(response.result);
-        setusers(response.result);
+      console.log(response.result);
+      setusers(response.result);
     });
+
+    GetRoles().then((response) => {
+      console.log(response);
+      setRoles(response.result);
+    });
+
+    
   }, []);
-  return <main>
-    <h1>Welcome back, admin!</h1>
-    <table>
+  return (
+    <main>
+      <h1>Welcome back, admin!</h1>
+      <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Roles</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+          </tr>
         </thead>
         <tbody>
         {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>
-                <ul>
-                  {user.roles.map(role => (
-                    <li key={role.id}>{role.nombre}</li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          ))}
+  <tr key={user.id}>
+    <td>{user.id}</td>
+    <td>{user.name}</td>
+    <td>{user.username}</td>
+    <td>{user.email}</td>
+    <td>
+      {roles.map((role) => (
+        <span key={role.id}>
+          <input
+            type="checkbox"
+            checked={user.roles.some(userRole => userRole.nombre === role.nombre)}
+            onChange={e => changeRole(user.id, role.nombre, e.target.checked)}
+          />
+          {role.nombre}
+        </span>
+      ))}
+    </td>
+  </tr>
+))}
+
         </tbody>
-    </table>
-  </main>;
+      </table>
+    </main>
+  );
 };
 
 export default AdminPanel;

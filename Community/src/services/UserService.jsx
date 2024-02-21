@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getHeaders = () => {
+export const getHeaders = () => {
     const token = localStorage.getItem('token');
     return {
         headers: {
@@ -8,7 +8,6 @@ const getHeaders = () => {
         }
     }
 }
-
 
 export const GetUsers = async () => {
     try {
