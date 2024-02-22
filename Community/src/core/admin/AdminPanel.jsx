@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetFromStorage } from "../../services/StorageService";
+import { GetFromStorage, GetIdFromStorage } from "../../services/StorageService";
 import { useNavigate } from "react-router-dom";
 import { GetUsers, UpdateUser } from "../../services/UserService";
 import "./style.css";
@@ -34,6 +34,7 @@ const AdminPanel = () => {
   };
 
   useEffect(() => {
+    GetIdFromStorage();
     document.title = "Admin Panel";
     const roleList = GetFromStorage("roles");
     if (roleList?.length != 0 && !roleList?.includes("ADMIN")) {
