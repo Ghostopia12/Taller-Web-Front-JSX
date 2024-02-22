@@ -27,10 +27,7 @@ const Register = () => {
 
   useEffect(() => {
     document.title = "Community | Registro";
-
     const roleList = GetFromStorage("roles");
-
-
     //check if "ADMIN" is in the role list
     if (roleList?.length!= 0 && !roleList?.includes("ADMIN")) {
       navigate("/dashboard");
