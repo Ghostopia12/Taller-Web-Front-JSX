@@ -3,9 +3,7 @@ import axios from "axios";
 export const createDeuda = async (deuda) => {
     const response = await axios.post(
       `http://localhost:8080/api/deudas/create?role=${1}`,//role del localStorage
-      JSON.stringify({
-        deuda
-      }),
+     deuda
     );
     if(response.status == 200){
       console.info("Deuda creada");
@@ -14,11 +12,8 @@ export const createDeuda = async (deuda) => {
 };
 
 export const getAllDeudas = async () => {
-    const response = await axios.get(`http://localhost:8080/api/deudas/all?enabled=false?role=${1}`);
-    if(response.status == 200){
-      console.info("---- exito ----")
-    }
-    return response.data;
+    const response = await axios.get(`http://localhost:8080/api/deudas/all?role=1`);
+    return response.data.deudas;
 };
 
 export const getDeudaById = async (id) => {
