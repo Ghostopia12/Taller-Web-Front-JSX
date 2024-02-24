@@ -126,7 +126,7 @@ const SisNavbar = () => {
             ) : (
               <Nav.Link href="/login">Iniciar sesión</Nav.Link>
             )}
-            {roleList?.length != 0 && roleList?.includes("ADMIN") && (
+            {roleList?.length != 0 && (roleList?.includes("ADMIN") || roleList?.includes("PROPIETARIO")) && (
               <Nav.Link href="/register">Registra un usuario</Nav.Link>
             )}
           </Nav>

@@ -29,7 +29,7 @@ const Login = () => {
               title: 'Bienvenido',
               text: 'Inicio de sesión exitoso',
             }).then(() => {
-              navigate("/");
+              window.location.href = '/';
             })
           }
         }).catch((error) => {
