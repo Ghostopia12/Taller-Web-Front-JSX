@@ -39,7 +39,7 @@ const Register = () => {
     document.title = "Community | Registro";
     if (
       roleList?.length != 0 &&
-      (!roleList?.includes("ADMIN") || !roleList?.includes("PROPIETARIO"))
+      (!roleList?.includes("ADMIN") && !roleList?.includes("PROPIETARIO"))
     ) {
       navigate("/dashboard");
     }
