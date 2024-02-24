@@ -24,7 +24,9 @@ const DocumentosFormPage = () => {
   const [nombre, setNombre] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
-  const [adminId, setAdminId] = useState("");
+ const adminId = jwtDecode(localStorage.getItem("token"))[
+  'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+]
 
   useEffect(() => {
     if (id !== undefined) {
@@ -32,7 +34,6 @@ const DocumentosFormPage = () => {
           setNombre(data.nombre);
           setMensaje(data.mensaje);
           setTipoDocumento(data.tipoDoc);
-          setAdminId(getUserId());
         });
     }
   }, [id]);
