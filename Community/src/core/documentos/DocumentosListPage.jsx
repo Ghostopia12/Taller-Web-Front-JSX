@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Card, Table } from "react-bootstrap";
-import { deleteDocumento } from "../../services/comunicacion/DocumentoService";
-import { DOCUMENTO_CREATE_URL } from "../../routing/CONSTANTS";
+import { DOCUMENTO_CREATE_URL, DOCUMENTO_EDIT_URL } from "../../routing/CONSTANTS";
+import { deleteDocumento, getListaDocumentos } from "../../services/comunicacion/DocumentoService";
 
 
 const DocumentosListPage = () => {
@@ -82,7 +82,7 @@ const DocumentosListPage = () => {
                     <td>
                       <Link
                         className="btn btn-primary"
-                        to={DOCUMENTO_CREATE_URL + "/" + documento.id}
+                        to={DOCUMENTO_EDIT_URL + "/" + documento.id}
                       >
                         Editar
                       </Link>

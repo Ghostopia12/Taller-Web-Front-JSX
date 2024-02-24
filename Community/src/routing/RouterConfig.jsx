@@ -23,6 +23,8 @@ import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
 import CrearParametro from "../core/cuentas/parametro/CrearParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
+import DocumentosListPage from "../core/documentos/DocumentosListPage";
+import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
 
 const RouterConfig = () => {
   return (
@@ -53,6 +55,13 @@ const RouterConfig = () => {
       <Route path="/propietario" element={<Propietario />} />
       <Route path="/trabajador" element={<Trabajador />} />
       <Route path="/" element={<Inicio />} />
+
+
+      // Documentos
+
+      <Route path="/listaDocumentos" element={<DocumentosListPage />} />
+      <Route path="/crearDocumento" element={<DocumentosFormPage />} />
+      <Route path="/editarDocumento/:id" element={<DocumentosFormPage />} />
       
     </Routes>
   );

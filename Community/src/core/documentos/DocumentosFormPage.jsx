@@ -11,6 +11,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { addDocumento, getDocumento, updateDocumento } from "../../services/comunicacion/DocumentoService";
 import { DOCUMENTO_LIST_URL } from "../../routing/CONSTANTS";
+import { jwtDecode } from "jwt-decode";
 
 
 
@@ -171,7 +172,7 @@ const DocumentosFormPage = () => {
                 <FormGroup>
                   <label>Administrador</label>
                   <FormControl
-                    value={localStorage.getItem('username')}
+                    value={jwtDecode(localStorage.getItem("token"))}
                     required
                     readOnly // Hacer que el campo sea de solo lectura
                   />
@@ -181,7 +182,7 @@ const DocumentosFormPage = () => {
                 </FormGroup>
 
                 <div className="mt-3">
-                  <Button type="submit">Guardar documento</Button>
+                  <Button type="submit">Guardar</Button>
                 </div>
               </Form>
             </div>

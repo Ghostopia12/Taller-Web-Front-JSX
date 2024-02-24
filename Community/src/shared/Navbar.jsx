@@ -71,6 +71,14 @@ const SisNavbar = () => {
                     Panel de administracion
                   </NavDropdown.Item>
                 </NavDropdown>
+                <NavDropdown title="Documentos" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/listaDocumentos">
+                    Lista de Documentos
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/crearDocumento">
+                    Crear Documento
+                  </NavDropdown.Item>
+                </NavDropdown>
               </>
             )}
             {isContable && (

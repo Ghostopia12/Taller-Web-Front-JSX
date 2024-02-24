@@ -12,3 +12,4 @@ export const SOLICITUD_CREATE_URL = "/crearSolicitud";
 export const SOLICITUD_DETAIL_URL = "/detalleSolicitud";
 export const DOCUMENTO_LIST_URL = "/listaDocumentos";
 export const DOCUMENTO_CREATE_URL = "/crearDocumento";
+export const DOCUMENTO_EDIT_URL = "/editarDocumento";
