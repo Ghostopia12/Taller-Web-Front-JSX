@@ -11,7 +11,6 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { addDocumento, getDocumento, updateDocumento } from "../../services/comunicacion/DocumentoService";
 import { DOCUMENTO_LIST_URL } from "../../routing/CONSTANTS";
-import Menu from "../../components/Menu";
 
 
 
@@ -105,7 +104,6 @@ const DocumentosFormPage = () => {
 
   return (
     <>
-    <Menu />
       <Container>
         <Card className="mt-3">
           <Card.Body>

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Card, Table } from "react-bootstrap";
-import Menu from "../../components/Menu";
 import { deleteDocumento } from "../../services/comunicacion/DocumentoService";
 import { DOCUMENTO_CREATE_URL } from "../../routing/CONSTANTS";
 
@@ -50,7 +49,6 @@ const DocumentosListPage = () => {
 
   return (
     <>
-    <Menu />
       <Container style={{marginTop: '24px'}}>
         <Card>
           <Card.Body>

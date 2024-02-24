@@ -1,5 +1,4 @@
 import { Alert, Card, Container, Form, FormGroup } from "react-bootstrap";
-import Menu from "../../components/Menu";
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { AREA_COMUN_LIST_URL } from "../../routing/CONSTANTS";
@@ -52,7 +51,6 @@ const SolicitudCreatePage = () => {
 
   return (
     <>
-      <Menu />
       <Container>
         <Card
           border="dark"
