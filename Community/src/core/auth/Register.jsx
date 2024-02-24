@@ -39,7 +39,8 @@ const Register = () => {
     document.title = "Community | Registro";
     if (
       roleList?.length != 0 &&
-      (!roleList?.includes("ADMIN") && !roleList?.includes("PROPIETARIO"))
+      !roleList?.includes("ADMIN") &&
+      !roleList?.includes("PROPIETARIO")
     ) {
       navigate("/dashboard");
     }
@@ -52,7 +53,13 @@ const Register = () => {
         title: <p>Registrando usuario, esto puede tardar un poco</p>,
         didOpen: () => {
           MySwal.showLoading();
-          register({ email, username, password,Name : name, Roles: selectedRoles.length > 0 ? selectedRoles : [selectedRole]})
+          register({
+            email,
+            username,
+            password,
+            Name: name,
+            Roles: selectedRoles.length > 0 ? selectedRoles : [selectedRole],
+          })
             .then((response) => {
               console.log(response);
             })
@@ -83,7 +90,7 @@ const Register = () => {
       setErrorEmail("El correo es obligatorio!");
     }
 
-    if(!name){
+    if (!name) {
       setSetErrorName("El nombre es obligatorio");
     }
 
@@ -102,61 +109,65 @@ const Register = () => {
       <div className="login-container">
         <h2>¡Unete a Community!</h2>
         <form>
-          <div>
-            <label htmlFor="email">Correo:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onFocus={() => setErrorEmail("")}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="off"
-            />
-            <p className="error">{errorEmail}</p>
-          </div>
-          <div>
-            <label htmlFor="name">Nombre:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onFocus={() => setSetErrorName("")}
-              onChange={(e) => setName(e.target.value)}
-              autoComplete="off"
-            />
-            <p className="error">{errorName}</p>
+          <div className="nose">
+            <div>
+              <label htmlFor="email">Correo:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onFocus={() => setErrorEmail("")}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
+              />
+              <p className="error">{errorEmail}</p>
+            </div>
+            <div>
+              <label htmlFor="name">Nombre:</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onFocus={() => setSetErrorName("")}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="off"
+              />
+              <p className="error">{errorName}</p>
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="username">Nombre de Usuario:</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onFocus={() => setErrorUser("")}
-              onChange={(e) => setUsername(e.target.value)}
-              autoComplete="off"
-            />
-            <p className="error">{errorUser}</p>
-          </div>
-          <div>
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              autoCapitalize="off"
-              onFocus={() => seterrorPassword("")}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <p className="error">{errorPassword}</p>
+          <div className="nose">
+            <div>
+              <label htmlFor="username">Nombre de Usuario:</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onFocus={() => setErrorUser("")}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="off"
+              />
+              <p className="error">{errorUser}</p>
+            </div>
+            <div>
+              <label htmlFor="password">Contraseña:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                autoCapitalize="off"
+                onFocus={() => seterrorPassword("")}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <p className="error">{errorPassword}</p>
+            </div>
           </div>
 
           <div id="role">
             {roleList?.includes("ADMIN") ? (
               <>
                 <div>
-                  <label>
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -164,10 +175,11 @@ const Register = () => {
                       checked={selectedRoles.includes(1)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Administrador
                   </label>
-                  <br />
-                  <label>
+
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -175,10 +187,11 @@ const Register = () => {
                       checked={selectedRoles.includes(2)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Contable
                   </label>
-                  <br />
-                  <label>
+
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -186,10 +199,11 @@ const Register = () => {
                       checked={selectedRoles.includes(3)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Residente
                   </label>
-                  <br />
-                  <label>
+
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -197,10 +211,11 @@ const Register = () => {
                       checked={selectedRoles.includes(4)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Guardia
                   </label>
-                  <br />
-                  <label>
+
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -208,10 +223,11 @@ const Register = () => {
                       checked={selectedRoles.includes(5)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Trabajador
                   </label>
-                  <br />
-                  <label>
+
+                  <label className="checkbox-label">
                     <input
                       type="checkbox"
                       name="role"
@@ -219,6 +235,7 @@ const Register = () => {
                       checked={selectedRoles.includes(6)}
                       onChange={handleRoleChange2}
                     />
+                    <span className="custom-checkbox"></span>
                     Propietario
                   </label>
                 </div>
@@ -230,7 +247,9 @@ const Register = () => {
                   value={selectedRole}
                   onChange={handleRoleChange}
                 >
-                  <option value={3} selected>Residente</option>
+                  <option value={3} selected>
+                    Residente
+                  </option>
                 </select>
               </>
             )}
