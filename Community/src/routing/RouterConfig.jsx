@@ -10,14 +10,12 @@ import Propietario from "../core/propietario/Propietario";
 import Trabajador from "../core/trabajador/Trabajador";
 import Guard from "../core/guardia/Guard";
 import CrearDeuda from "../core/cuentas/deuda/CrearDeuda";
-<<<<<<< HEAD
 import AreaComunListPage from "../core/areas_comunes/AreaComunListPage";
 import AreaComunCreatePage from "../core/areas_comunes/AreaComunCreatePage";
 import AreaComunDetailPage from "../core/areas_comunes/AreaComunDetailPage";
 import SolicitudListPage from "../core/solicitudes/SolicitudListPage";
 import SolicitudCreatePage from "../core/solicitudes/SolicitudCreatePage";
 import SolicitudDetailPage from "../core/solicitudes/SolicitudDetailPage";
-=======
 import DeudasList from "../core/cuentas/deuda/DeudasList";
 import CrearPagos from "../core/cuentas/pago/CrearPago";
 import PagosList from "../core/cuentas/pago/PagosList";
@@ -25,7 +23,6 @@ import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
 import CrearParametro from "../core/cuentas/parametro/CrearParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
->>>>>>> ee1afc14122594dbc455bc9b3f8ee2ba7640d0f1
 
 const RouterConfig = () => {
   return (

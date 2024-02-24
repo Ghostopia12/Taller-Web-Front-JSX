@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { GetFromStorage } from "../services/StorageService";
 import { useEffect, useState } from "react";
-=======
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { GetFromStorage } from '../services/StorageService';
-import { useEffect, useState } from 'react';
->>>>>>> ee1afc14122594dbc455bc9b3f8ee2ba7640d0f1
 
 const SisNavbar = () => {
   const [isContable, setIsContable] = useState(false);
@@ -53,14 +47,12 @@ const SisNavbar = () => {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-<<<<<<< HEAD
       <Container>
         <Navbar.Brand href="#home">Mi Sitio</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Inicio</Nav.Link>
-            {isContable && <Nav.Link href="/deudas">Deudas</Nav.Link>}
             {isAdmin && (
               <NavDropdown title="Áreas Comunes" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/crearAreaComun">
@@ -74,13 +66,6 @@ const SisNavbar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             )}
-=======
-    <Container>
-      <Navbar.Brand href="#home">Mi Sitio</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="/">Inicio</Nav.Link>
           {isContable && (
             <NavDropdown title="Cuentas" id="basic-nav-dropdown">
               <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
@@ -90,14 +75,21 @@ const SisNavbar = () => {
             </NavDropdown>
           )}
           {
-            isAdmin && <Nav.Link href="/adminPanel">Administracion</Nav.Link>
-          }
-          {
             isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>
           }
-          {
-            isResidente && <Nav.Link href="/residente">Residente</Nav.Link>
-          }
+            {isResidente && (
+              <>
+                <Nav.Link href="/residente">Residente</Nav.Link>
+                <NavDropdown title="Solicitud de Reserva" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/listaAreasComunes">
+                    Lista de Áreas Comunes
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/listaSolicitudes">
+                    Lista de Solicitudes
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
           {
             isPropietario && <Nav.Link href="/propietario">Propietario</Nav.Link>
           }
@@ -122,50 +114,5 @@ const SisNavbar = () => {
   </Navbar>
   )
 }
->>>>>>> ee1afc14122594dbc455bc9b3f8ee2ba7640d0f1
-
-            {isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>}
-
-            {isResidente && (
-              <>
-                <Nav.Link href="/residente">Residente</Nav.Link>
-                <NavDropdown title="Solicitud de Reserva" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/listaAreasComunes">
-                    Lista de Áreas Comunes
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/listaSolicitudes">
-                    Lista de Solicitudes
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            )}
-
-            {isPropietario && (
-              <Nav.Link href="/propietario">Propietario</Nav.Link>
-            )}
-            {isTrabajador && <Nav.Link href="/trabajador">Trabajador</Nav.Link>}
-          </Nav>
-          <Nav>
-            {isLoggedIn ? (
-              <Nav.Link
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href = "/";
-                }}
-              >
-                Cerrar sesión
-              </Nav.Link>
-            ) : (
-              <Nav.Link href="/login">Iniciar sesión</Nav.Link>
-            )}
-            {roleList?.length != 0 && roleList?.includes("ADMIN") && (
-              <Nav.Link href="/register">Registra un usuario</Nav.Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
-};
 
 export default SisNavbar;
