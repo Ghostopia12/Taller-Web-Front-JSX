@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { GetFromStorage } from '../services/StorageService';
 import { useEffect, useState } from 'react';
 
@@ -41,9 +41,14 @@ const SisNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link href="/">Inicio</Nav.Link>
-          {
-            isContable && <Nav.Link href="/deudas">Deudas</Nav.Link>
-          }
+          {isContable && (
+            <NavDropdown title="Cuentas" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
+              <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
+              <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
+              <NavDropdown.Item href="/parametros">Parametros</NavDropdown.Item>
+            </NavDropdown>
+          )}
           {
             isAdmin && <Nav.Link href="/adminPanel">Administracion</Nav.Link>
           }
