@@ -41,11 +41,10 @@ const DocumentosListPage = () => {
     return fecha.toLocaleDateString('es-ES', options);
   };
 
-  const id = localStorage.getItem('id');
-  console.log("userId",id);
+
 
   const username = localStorage.getItem('username');
-  console.log("username",username);
+
 
   return (
     <>

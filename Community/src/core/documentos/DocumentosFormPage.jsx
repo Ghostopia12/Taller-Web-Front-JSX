@@ -28,6 +28,8 @@ const DocumentosFormPage = () => {
   'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
 ]
 
+console.log("adminId", adminId)
+
   useEffect(() => {
     if (id !== undefined) {
         getDocumento(id).then((data) => {
