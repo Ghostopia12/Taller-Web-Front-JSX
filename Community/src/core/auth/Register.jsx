@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Register.css";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
@@ -6,44 +6,53 @@ import { register } from "../../services/AuthService";
 import { GetFromStorage } from "../../services/StorageService";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Register = () => {
   const MySwal = withReactContent(Swal);
 
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [errorEmail, setErrorEmail] = useState("");
   const [errorUser, setErrorUser] = useState("");
   const [errorPassword, seterrorPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState(0);
+  const [selectedRole, setSelectedRole] = useState(3);
+  const [selectedRoles, setSelectedRoles] = useState([]);
 
+  const [name, setName] = useState("");
+  const [errorName, setSetErrorName] = useState("");
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
+  const handleRoleChange2 = (e) => {
+    const value = parseInt(e.target.value);
+    if (selectedRoles.includes(value)) {
+      setSelectedRoles(selectedRoles.filter((role) => role !== value));
+    } else {
+      setSelectedRoles([...selectedRoles, value]);
+    }
+  };
   const navigate = useNavigate();
+  const roleList = GetFromStorage("roles");
 
   useEffect(() => {
     document.title = "Community | Registro";
-    const roleList = GetFromStorage("roles");
-    //check if "ADMIN" is in the role list
-    if (roleList?.length!= 0 && !roleList?.includes("ADMIN")) {
+    if (
+      roleList?.length != 0 &&
+      (!roleList?.includes("ADMIN") || !roleList?.includes("PROPIETARIO"))
+    ) {
       navigate("/dashboard");
     }
-    //Users without admin role can't access to this page
-
   }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     if (validateFields()) {
       MySwal.fire({
-        title: <p>Iniciando sesion, esto puede tardar un poco</p>,
+        title: <p>Registrando usuario, esto puede tardar un poco</p>,
         didOpen: () => {
           MySwal.showLoading();
-          register({email, username, password, role : selectedRole })
+          register({ email, username, password,Name : name, Roles: selectedRoles.length > 0 ? selectedRoles : [selectedRole]})
             .then((response) => {
               console.log(response);
             })
@@ -52,9 +61,10 @@ const Register = () => {
               MySwal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Usuario o contraseña incorrectos",
+                text: "Algo salio mal, intentalo de nuevo",
               });
-            }).then(() => {
+            })
+            .then(() => {
               MySwal.close();
             });
         },
@@ -65,20 +75,25 @@ const Register = () => {
   const validateFields = () => {
     if (!username) {
       setErrorUser("El nombre de usuario es obligatorio");
-    } 
-    if(!password){
-        seterrorPassword("La contraseña es obligatoria");
     }
-    if(!email){
-        setErrorEmail("El correo es obligatorio!")
+    if (!password) {
+      seterrorPassword("La contraseña es obligatoria");
+    }
+    if (!email) {
+      setErrorEmail("El correo es obligatorio!");
     }
 
-    if (!username || !password || !email) {
+    if(!name){
+      setSetErrorName("El nombre es obligatorio");
+    }
+
+    if (!username || !password || !email || !name) {
       return false;
     }
     setErrorUser("");
     seterrorPassword("");
-    setErrorEmail("")
+    setErrorEmail("");
+    setSetErrorName("");
     return true;
   };
 
@@ -87,7 +102,7 @@ const Register = () => {
       <div className="login-container">
         <h2>¡Unete a Community!</h2>
         <form>
-        <div>
+          <div>
             <label htmlFor="email">Correo:</label>
             <input
               type="email"
@@ -98,6 +113,18 @@ const Register = () => {
               autoComplete="off"
             />
             <p className="error">{errorEmail}</p>
+          </div>
+          <div>
+            <label htmlFor="name">Nombre:</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onFocus={() => setSetErrorName("")}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="off"
+            />
+            <p className="error">{errorName}</p>
           </div>
 
           <div>
@@ -126,18 +153,87 @@ const Register = () => {
           </div>
 
           <div id="role">
-          <select
-            name="role"
-            value={selectedRole}
-            onChange={handleRoleChange}
-          >
-            <option value={1}>Residente</option>
-            <option value={2}>Administrador</option>
-            <option value={3}>Contable</option>
-            <option value={4}>Guardia</option>
-            <option value={5}>Trabajador</option>
-            <option value={6}>Propietario</option>
-          </select>
+            {roleList?.includes("ADMIN") ? (
+              <>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={1}
+                      checked={selectedRoles.includes(1)}
+                      onChange={handleRoleChange2}
+                    />
+                    Administrador
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={2}
+                      checked={selectedRoles.includes(2)}
+                      onChange={handleRoleChange2}
+                    />
+                    Contable
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={3}
+                      checked={selectedRoles.includes(3)}
+                      onChange={handleRoleChange2}
+                    />
+                    Residente
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={4}
+                      checked={selectedRoles.includes(4)}
+                      onChange={handleRoleChange2}
+                    />
+                    Guardia
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={5}
+                      checked={selectedRoles.includes(5)}
+                      onChange={handleRoleChange2}
+                    />
+                    Trabajador
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="role"
+                      value={6}
+                      checked={selectedRoles.includes(6)}
+                      onChange={handleRoleChange2}
+                    />
+                    Propietario
+                  </label>
+                </div>
+              </>
+            ) : (
+              <>
+                <select
+                  name="role"
+                  value={selectedRole}
+                  onChange={handleRoleChange}
+                >
+                  <option value={3} selected>Residente</option>
+                </select>
+              </>
+            )}
           </div>
 
           <button
