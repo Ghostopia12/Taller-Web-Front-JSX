@@ -64,6 +64,11 @@ const SisNavbar = () => {
                 <NavDropdown.Item href="/listaSolicitudes">
                   Lista de Solicitudes
                 </NavDropdown.Item>
+                
+                <NavDropdown.Item href="/adminPanel">
+                  Panel de administracion
+                </NavDropdown.Item>
+
               </NavDropdown>
             )}
           {isContable && (
