@@ -56,9 +56,6 @@ const RouterConfig = () => {
       <Route path="/trabajador" element={<Trabajador />} />
       <Route path="/" element={<Inicio />} />
 
-
-      // Documentos
-
       <Route path="/listaDocumentos" element={<DocumentosListPage />} />
       <Route path="/crearDocumento" element={<DocumentosFormPage />} />
       <Route path="/editarDocumento/:id" element={<DocumentosFormPage />} />

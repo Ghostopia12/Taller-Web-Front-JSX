@@ -169,10 +169,12 @@ const DocumentosFormPage = () => {
                 </FormGroup>
 
 
-                <FormGroup>
+                <FormGroup style={{display : "none"}}>
                   <label>Administrador</label>
                   <FormControl
-                    value={jwtDecode(localStorage.getItem("token"))}
+                    value={jwtDecode(localStorage.getItem("token"))[
+                      'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+                    ]}
                     required
                     readOnly // Hacer que el campo sea de solo lectura
                   />
