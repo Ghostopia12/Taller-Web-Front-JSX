@@ -54,39 +54,44 @@ const SisNavbar = () => {
           <Nav className="me-auto">
             <Nav.Link href="/">Inicio</Nav.Link>
             {isAdmin && (
-              <NavDropdown title="Áreas Comunes" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/crearAreaComun">
-                  Crear Área Comun
+              <>
+                <NavDropdown title="Áreas Comunes" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/crearAreaComun">
+                    Crear Área Comun
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/listaAreasComunes">
+                    Lista de Áreas Comunes
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/listaSolicitudes">
+                    Lista de Solicitudes
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title="Administracion" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/adminPanel">
+                    Panel de administracion
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
+            {isContable && (
+              <NavDropdown title="Cuentas" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
+                <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
+                <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
+                <NavDropdown.Item href="/parametros">
+                  Parametros
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/listaAreasComunes">
-                  Lista de Áreas Comunes
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/listaSolicitudes">
-                  Lista de Solicitudes
-                </NavDropdown.Item>
-                
-                <NavDropdown.Item href="/adminPanel">
-                  Panel de administracion
-                </NavDropdown.Item>
-
               </NavDropdown>
             )}
-          {isContable && (
-            <NavDropdown title="Cuentas" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
-              <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
-              <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
-              <NavDropdown.Item href="/parametros">Parametros</NavDropdown.Item>
-            </NavDropdown>
-          )}
-          {
-            isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>
-          }
+            {isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>}
             {isResidente && (
               <>
                 <Nav.Link href="/residente">Residente</Nav.Link>
-                <NavDropdown title="Solicitud de Reserva" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/listaAreasComunes">
+                <NavDropdown
+                  title="Solicitud de Reserva"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href="/listaAreasComunes">
                     Lista de Áreas Comunes
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/listaSolicitudes">
@@ -95,29 +100,32 @@ const SisNavbar = () => {
                 </NavDropdown>
               </>
             )}
-          {
-            isPropietario && <Nav.Link href="/propietario">Propietario</Nav.Link>
-          }
-          {
-            isTrabajador && <Nav.Link href="/trabajador">Trabajador</Nav.Link>
-          }
-        </Nav>
-        <Nav>
-          {
-            isLoggedIn ? <Nav.Link onClick={()=>{
-              localStorage.clear();
-              window.location.href = "/";
-            }}>Cerrar sesión</Nav.Link> : 
-            <Nav.Link href="/login">Iniciar sesión</Nav.Link>
-}
-          {
-           roleList?.length!= 0 && roleList?.includes("ADMIN") &&  <Nav.Link href="/register">Registra un usuario</Nav.Link>
-          }
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-  )
-}
+            {isPropietario && (
+              <Nav.Link href="/propietario">Propietario</Nav.Link>
+            )}
+            {isTrabajador && <Nav.Link href="/trabajador">Trabajador</Nav.Link>}
+          </Nav>
+          <Nav>
+            {isLoggedIn ? (
+              <Nav.Link
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/";
+                }}
+              >
+                Cerrar sesión
+              </Nav.Link>
+            ) : (
+              <Nav.Link href="/login">Iniciar sesión</Nav.Link>
+            )}
+            {roleList?.length != 0 && roleList?.includes("ADMIN") && (
+              <Nav.Link href="/register">Registra un usuario</Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
 export default SisNavbar;
