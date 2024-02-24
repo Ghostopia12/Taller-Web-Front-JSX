@@ -1,0 +1,7 @@
+/* AreaComunDetailPage.css */
+
+.botones-container {
+    justify-content: flex-end; /* Alineación a la derecha */
+    margin-top: 15px;
+}
+

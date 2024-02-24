@@ -1,0 +1,54 @@
+/* AreaComunListPage.css */
+
+.container-wrapper {
+    background-image: url('../../assets/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-color: #f0f0f0; /* Color de fondo gris claro para los Cards */
+    min-height: 100vh;
+}
+
+.custom-card {
+    background-color: #f9f5e9;  /* Color crema para los Cards */
+    border: 1px solid #ddd;  /* Borde gris claro */
+    margin-bottom: 20px;  /* Mayor espacio entre los Cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Alineación vertical */
+    padding: 20px;  /* Mayor espacio interno en los Cards */
+    border-radius: 8px;  /* Bordes redondeados */
+}
+
+.card-content {
+    text-align: left;  /* Alineación del texto a la izquierda */
+}
+
+.botones-container {
+    display: flex;
+    justify-content: flex-end; /* Alineación a la derecha */
+    align-items: center;
+    width: 100%;  /* Ajuste para que los botones ocupen todo el ancho */
+}
+
+.editar-button,
+.eliminar-button {
+    padding: 10px 15px;  /* Tamaño uniforme para ambos botones */
+    font-size: 16px;  /* Tamaño de fuente uniforme para ambos botones */
+    margin-left: 20px;
+}
+
+.editar-button {
+    color: #fff;  /* Texto blanco */
+    border-radius: 4px;
+}
+
+.eliminar-button {
+    color: #fff;  /* Texto blanco */
+    border-radius: 4px;
+}
+
+.lista-title {
+    color: #fff;  /* Texto blanco */
+}

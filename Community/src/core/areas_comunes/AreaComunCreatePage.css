@@ -1,0 +1,49 @@
+/* AreaComunCreatePage.css */
+
+body {
+    background-image: url('../../assets/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-color: #f0f0f0; /* Color de fondo gris claro para los Cards */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.custom-card {
+    background-color: #f9f5e9;  /* Color crema para los Cards */
+    border: 1px solid #ddd;  /* Borde gris claro */
+    margin-bottom: 20px;  /* Mayor espacio entre los Cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Alineación vertical */
+    padding: 20px;  /* Mayor espacio interno en los Cards */
+    border-radius: 8px;  /* Bordes redondeados */
+}
+
+.form-group {
+    text-align: right;  /* Alineación del texto a la derecha */
+}
+
+.form-control,
+.form-select {
+    margin-bottom: 10px;  /* Espacio entre los elementos del formulario */
+}
+
+.link-button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;  /* Texto blanco */
+    background-color: #007bff;  /* Azul */
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    text-decoration: none;  /* Quita el subrayado del enlace */
+}
+
+.link-button:hover {
+    background-color: #0056b3;  /* Azul más oscuro al pasar el ratón */
+}

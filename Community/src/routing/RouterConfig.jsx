@@ -11,6 +11,12 @@ import Propietario from "../core/propietario/Propietario";
 import Trabajador from "../core/trabajador/Trabajador";
 import Guard from "../core/guardia/Guard";
 import CrearDeuda from "../core/cuentas/deuda/CrearDeuda";
+import AreaComunListPage from "../core/areas_comunes/AreaComunListPage";
+import AreaComunCreatePage from "../core/areas_comunes/AreaComunCreatePage";
+import AreaComunDetailPage from "../core/areas_comunes/AreaComunDetailPage";
+import SolicitudListPage from "../core/solicitudes/SolicitudListPage";
+import SolicitudCreatePage from "../core/solicitudes/SolicitudCreatePage";
+import SolicitudDetailPage from "../core/solicitudes/SolicitudDetailPage";
 
 const RouterConfig = () => {
   return (
@@ -21,6 +27,14 @@ const RouterConfig = () => {
       <Route path="/adminPanel" element={<AdminPanel />} />
       <Route path="/deudas" element={<DeudasList />} />
       <Route path="/deudas/crear" element={<CrearDeuda />} />
+
+      <Route path="/listaAreasComunes" element={<AreaComunListPage />} />
+      <Route path="/crearAreaComun" element={<AreaComunCreatePage />} />
+      <Route path="/detalleAreaComun" element={<AreaComunDetailPage />} />
+
+      <Route path="/listaSolicitudes" element={<SolicitudListPage />} />
+      <Route path="/crearSolicitud" element={<SolicitudCreatePage />} />
+      <Route path="/detalleSolicitud" element={<SolicitudDetailPage />} />
 
       <Route path="/guardia" element={<Guard />} />
       <Route path="/residente" element={<Residente />} />
