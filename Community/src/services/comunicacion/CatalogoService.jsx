@@ -1,10 +1,10 @@
 import axios from "axios";
 
 
-export const getListaDocumentos = () => {
+export const getListaCatalogos = () => {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://localhost:3000/documento/", {
+        .get("http://localhost:3000/catalogo/", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -21,10 +21,10 @@ export const getListaDocumentos = () => {
   };
 
 
-export const getDocumento = (id) => {
+export const getCatalogo = (id) => {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://localhost:3000/documento/" + id + "/", {
+        .get("http://localhost:3000/catalogo/" + id + "/", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -40,10 +40,10 @@ export const getDocumento = (id) => {
     });
   }
 
-export const addDocumento = (documento) => {
+export const addCatalogo = (catalogo) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://localhost:3000/documento/", documento, {
+        .post("http://localhost:3000/catalogo/", catalogo, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -60,10 +60,10 @@ export const addDocumento = (documento) => {
   }
 
 
-export const updateDocumento = (id, data) => {
+export const updateCatalogo = (id, data) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch("http://localhost:3000/documento/" + id, data, {
+        .patch("http://localhost:3000/catalogo/" + id, data, {
           headers: {
             "Content-Type": "application/json",
           },  
@@ -80,10 +80,10 @@ export const updateDocumento = (id, data) => {
   }
 
 
-export const deleteDocumento = (id) => {
+export const deleteCatalogo = (id) => {
     return new Promise((resolve, reject) => {
       axios
-        .delete("http://localhost:3000/documento/" + id + "/", {
+        .delete("http://localhost:3000/catalogo/" + id + "/", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -100,10 +100,10 @@ export const deleteDocumento = (id) => {
   }
 
 
-  export const deshabilitarDocumento = (id) => {
+  export const deshabilitarCatalogo = (id) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch("http://localhost:3000/documento/" + id + "/disable", {
+        .patch("http://localhost:3000/catalogo/" + id + "/disable", {
           headers: {
             "Content-Type": "application/json",
           },

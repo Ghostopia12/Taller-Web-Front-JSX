@@ -4,20 +4,20 @@ import { Link } from "react-router-dom";
 
 import { Container, Card, Table } from "react-bootstrap";
 import { DOCUMENTO_EDIT_URL } from "../../routing/CONSTANTS";
-import { deleteDocumento, deshabilitarDocumento, getListaDocumentos } from "../../services/comunicacion/DocumentoService";
+import { deleteDocumento, deshabilitarDocumento, getlistaCatalogos } from "../../services/comunicacion/DocumentoService";
 import { jwtDecode } from "jwt-decode";
 import { GetUsers } from "../../services/UserService";
+import { deleteCatalogo, deshabilitarCatalogo, getListaCatalogos } from "../../services/comunicacion/CatalogoService";
 
 
-const DocumentosListPage = () => {
-  const [listaDocumentos, setListaDocumentos] = useState([]);
+const CatalogosListPage = () => {
+  const [listaCatalogos, setListaCatalogos] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
         // Assuming localStorage.getItem("token") is not null or undefined
-        const decodedToken = jwtDecode(localStorage.getItem("token"));
         const userId = jwtDecode(localStorage.getItem("token"))[
           'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
         ]
@@ -44,27 +44,27 @@ const DocumentosListPage = () => {
   }, []);
 
   useEffect(() => {
-    loadDocumentos();
+    loadCatalogos();
   }, []);
 
-  const loadDocumentos = () => {
-    getListaDocumentos().then((data) => {
-      setListaDocumentos(data);
+  const loadCatalogos = () => {
+    getListaCatalogos().then((data) => {
+      setListaCatalogos(data);
     });
   };
 
-  const eliminarDocumentos = (id) => {
-    if (window.confirm("¿Estas seguro que deseas eliminar este documento?")) {
-      deleteDocumento(id).then(() => {
-        loadDocumentos();
+  const eliminarCatalogos = (id) => {
+    if (window.confirm("¿Estas seguro que deseas eliminar este catalogo?")) {
+      deleteCatalogo(id).then(() => {
+        loadCatalogos();
       });
     }
   };
 
-  const desDocumento = (id) => {
-    if (window.confirm("¿Estas seguro que deseas deshabilitar este documento?")) {
-      deshabilitarDocumento(id).then(() => {
-        loadDocumentos();
+  const desCatalogo = (id) => {
+    if (window.confirm("¿Estas seguro que deseas deshabilitar este catalogo?")) {
+      deshabilitarCatalogo(id).then(() => {
+        loadCatalogos();
       });
     }
   }
@@ -87,17 +87,15 @@ const DocumentosListPage = () => {
       <Container style={{marginTop: '24px'}}>
         <Card>
           <Card.Body>
-            <Card.Title>Lista de documentos</Card.Title>
+            <Card.Title>Lista de catalogos</Card.Title>
             <Table>
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
-                  <th>Mensaje</th>
                   <th>Fecha y Hora</th>
-                  <th>Tipo de documento</th>
+                  <th>Documento</th>
                   <th>Administrador</th>
-                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -105,20 +103,19 @@ const DocumentosListPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {listaDocumentos.map((documento) => (
-                  <tr key={documento.id}>
-                    <td>{documento.id}</td>
-                    <td>{documento.nombre}</td>
-                    <td>{documento.mensaje}</td>
-                    <td>{fechaHoraFormateada(documento.fechaHora)}</td>
-                    <td>{documento.tipoDoc}</td>
-                    <td>{}</td>
+                {listaCatalogos.map((catalogo) => (
+                  <tr key={catalogo.id}>
+                    <td>{catalogo.id}</td>
+                    <td>{catalogo.nombre}</td>
+                    <td>{fechaHoraFormateada(catalogo.fechaHora)}</td>
+                    <td>{catalogo.documentoId}</td>
+                    <td>{catalogo.adminId}</td>
                     <td></td>
                     <td></td>
                     <td>
                       <Link
                         className="btn btn-primary"
-                        to={DOCUMENTO_EDIT_URL + "/" + documento.id}
+                        to={DOCUMENTO_EDIT_URL + "/" + catalogo.id}
                       >
                         Editar
                       </Link>
@@ -126,7 +123,7 @@ const DocumentosListPage = () => {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={() => eliminarDocumentos(documento.id)}
+                        onClick={() => eliminarCatalogos(catalogo.id)}
                       >
                         Eliminar
                       </button>
@@ -134,7 +131,7 @@ const DocumentosListPage = () => {
                     <td>
                     <button
                         className="btn btn-warning"
-                        onClick={() => desDocumento(documento.id)}
+                        onClick={() => desCatalogo(catalogo.id)}
                       >
                         Deshabilitar
                       </button>
@@ -150,4 +147,4 @@ const DocumentosListPage = () => {
   );
 };
 
-export default DocumentosListPage;
+export default CatalogosListPage;

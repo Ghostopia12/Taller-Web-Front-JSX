@@ -13,3 +13,6 @@ export const SOLICITUD_DETAIL_URL = "/detalleSolicitud";
 export const DOCUMENTO_LIST_URL = "/listaDocumentos";
 export const DOCUMENTO_CREATE_URL = "/crearDocumento";
 export const DOCUMENTO_EDIT_URL = "/editarDocumento";
+export const CATALOGO_LIST_URL = "/listaCatalogos"
+export const CATALOGO_CREATE_URL = "/crearCatalogo"
+export const CATALOGO_EDIT_URL = "/editarCatalogo"

@@ -16,7 +16,7 @@ import { jwtDecode } from "jwt-decode";
 
 
 
-const DocumentosFormPage = () => {
+const CatalogosFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
@@ -196,4 +196,4 @@ console.log("adminId", adminId)
   );
 };
 
-export default DocumentosFormPage;
+export default CatalogosFormPage;

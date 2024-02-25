@@ -25,6 +25,8 @@ import CrearParametro from "../core/cuentas/parametro/CrearParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
 import DocumentosListPage from "../core/documentos/DocumentosListPage";
 import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
+import CatalogosListPage from "../core/catalogos/CatalogosListPage";
+import CatalogosFormPage from "../core/catalogos/CatalogosFormPage";
 
 const RouterConfig = () => {
   return (
@@ -59,6 +61,10 @@ const RouterConfig = () => {
       <Route path="/listaDocumentos" element={<DocumentosListPage />} />
       <Route path="/crearDocumento" element={<DocumentosFormPage />} />
       <Route path="/editarDocumento/:id" element={<DocumentosFormPage />} />
+
+      <Route path="/listaCatalogos" element={<CatalogosListPage />} />
+      <Route path="/crearCatalogo" element={<CatalogosFormPage />} />
+      <Route path="/editarCatalogo/:id" element={<CatalogosFormPage />} />
       
     </Routes>
   );
