@@ -25,6 +25,10 @@ import CrearParametro from "../core/cuentas/parametro/CrearParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
 import DocumentosListPage from "../core/documentos/DocumentosListPage";
 import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
+import PersonaListPage from "../core/condominios/PersonaListPage";
+import PersonaFormPage from "../core/condominios/PersonaFormPage";
+import CondominioEditPage from "../core/condominios/CondominioEditPage";
+
 
 const RouterConfig = () => {
   return (
@@ -59,6 +63,11 @@ const RouterConfig = () => {
       <Route path="/listaDocumentos" element={<DocumentosListPage />} />
       <Route path="/crearDocumento" element={<DocumentosFormPage />} />
       <Route path="/editarDocumento/:id" element={<DocumentosFormPage />} />
+
+
+      <Route path="/personas/:id" element={<PersonaListPage/>} />
+      <Route path="/personas/create/:id" element={<PersonaFormPage/>} />
+      <Route path="/condominio/edit/:id" element={<CondominioEditPage/>} />
       
     </Routes>
   );

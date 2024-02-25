@@ -1,6 +1,7 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { GetFromStorage } from "../services/StorageService";
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const SisNavbar = () => {
   const [isContable, setIsContable] = useState(false);
@@ -10,10 +11,20 @@ const SisNavbar = () => {
   const [isPropietario, setIsPropietario] = useState(false);
   const [isTrabajador, setIsTrabajador] = useState(false);
   const [roleList, setRoleList] = useState([]);
+  const [userId, setUserId] = useState(1)
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const token = GetFromStorage("token");
+    console.log(token);
+    if (token) {
+      const id = jwtDecode(localStorage.getItem("token"))[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ];
+      setUserId(id);
+      console.log(userId);
+    }
     fetchUsersRoles();
   }, []);
 
@@ -66,6 +77,13 @@ const SisNavbar = () => {
                     Lista de Solicitudes
                   </NavDropdown.Item>
                 </NavDropdown>
+                {userId && (
+                  <NavDropdown title="Condominios" id="basic-nav-dropdown">
+                    <NavDropdown.Item href={`/personas/${userId}`}>
+                      Administrar condominio
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
                 <NavDropdown title="Administracion" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/adminPanel">
                     Panel de administracion

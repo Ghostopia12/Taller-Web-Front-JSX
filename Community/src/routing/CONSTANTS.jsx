@@ -13,3 +13,17 @@ export const SOLICITUD_DETAIL_URL = "/detalleSolicitud";
 export const DOCUMENTO_LIST_URL = "/listaDocumentos";
 export const DOCUMENTO_CREATE_URL = "/crearDocumento";
 export const DOCUMENTO_EDIT_URL = "/editarDocumento";
+
+export const PERSONAS_LIST_URL = "/personas/";
+export const PERSONA_CREATE_URL = "/personas/create/";
+export const CONDOMINIO_EDIT_URL = "/condominio/edit/";
+export const MANZANA_LIST_URL = "/manzana/list/";
+export const MANZANA_CREATE_URL = "/manzanas/create/";
+export const BLOQUE_LIST_URL = "/bloque/list/";
+export const BLOQUE_CREATE_URL = "/bloques/create/";
+export const LOTE_LIST_URL = "/lote/list/";
+export const LOTE_CREATE_URL = "/lotes/create/";
+export const PISO_LIST_URL = "/pisos/list/";
+export const PISO_CREATE_URL = "/pisos/create/";
+export const DPTO_LIST_URL = "/dpto/list/";
+export const DPTO_CREATE_URL = "/dpto/create/";
