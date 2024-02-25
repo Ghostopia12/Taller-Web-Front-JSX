@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
 import {
   getListaInmuebles,
   patchUpdateInmueble,
-} from "../../services/InmueblesService";
+} from "../../services/condominioService/InmueblesService";
 
 const LoteListPage = () => {
   const { id } = useParams(); // Obtener el ID de la manzana de la URL
@@ -18,7 +17,7 @@ const LoteListPage = () => {
 
   const loadLotes = () => {
     console.log("manzanaId", id);
-    getListaInmuebles(getAuthToken()).then((data) => {
+    getListaInmuebles().then((data) => {
       // Filtrar los lotes para mostrar solo los de la manzana específica
       const lotesManzana =
         data &&
@@ -35,7 +34,7 @@ const LoteListPage = () => {
 
     // Confirmar antes de eliminar
     if (window.confirm("¿Estás seguro de que quieres eliminar este lote?")) {
-      patchUpdateInmueble(id, { activo: false, fecha_cambio_activo: currentDate })
+      patchUpdateInmueble(id, { activo: true, fecha_cambio_activo: currentDate })
         .then(() => {
           // Filtrar los lotes para mostrar solo los lotes activos
           setListaLotes((prevState) =>

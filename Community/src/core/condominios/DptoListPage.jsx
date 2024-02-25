@@ -1,51 +1,56 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
-import { getListaInmuebles, patchUpdateInmueble } from "../../services/InmueblesService";
+import { getListaInmuebles, patchUpdateInmueble } from "../../services/condominioService/InmueblesService";
 
 const DptoListPage = () => {
   const { id } = useParams(); // Obtener el ID de la manzana de la URL
   const [listaLotes, setListaLotes] = useState([]);
-  
   const [showAlertError, setShowAlertError] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Estado para almacenar el ID del departamento a eliminar
 
   useEffect(() => {
     loadLotes();
-  }, [id]); // Volver a cargar los lotes cuando cambie el ID de la manzana
+  }, [id]); // Volver a cargar los departamentos cuando cambie el ID de la manzana
 
   const loadLotes = () => {
-    getListaInmuebles(getAuthToken()).then((data) => {
-      // Filtrar los lotes para mostrar solo los de la manzana específica
-      const lotesManzana = data && data.filter((lote) => lote.pisoId && lote.pisoId.id === parseInt(id));
-      setListaLotes(lotesManzana);
+    getListaInmuebles().then((data) => {
+      // Filtrar los departamentos para mostrar solo los de la manzana específica
+      const departamentosManzana = data && data.filter((lote) => lote.pisoId && lote.pisoId.id === parseInt(id));
+      setListaLotes(departamentosManzana);
     });
   };
 
+
   const updateCondominio = (id) => {
     setShowAlertError(false);
-    patchUpdateInmueble( id, { activo: true })
-      .then((data) => {
-        if (!data.id) {
-          setShowAlertError(true);
-          return;
-        }
-        loadLotes();
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          setShowAlertError(true);
-        } else {
-          console.log(error);
-        }
-      });
+    const currentDate = new Date().toISOString(); // Obtener la fecha actual en formato ISO
+
+    // Confirmar antes de eliminar
+    if (window.confirm("¿Estás seguro de que quieres eliminar este departamento?")) {
+      patchUpdateInmueble(id, { activo: true, fecha_cambio_activo: currentDate })
+        .then(() => {
+          // Filtrar los lotes para mostrar solo los lotes activos
+          setListaLotes((prevState) =>
+            prevState.filter((lote) => lote.id !== id)
+          );
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            setShowAlertError(true);
+          } else {
+            console.log(error);
+          }
+        });
+    }
   };
+
 
   const personasActivas = listaLotes.filter((persona) => !persona.activo);
 
+
   return (
     <>
-      
       <Container>
         <Card>
           <Card.Body>
@@ -75,12 +80,7 @@ const DptoListPage = () => {
                     <td>{lote.capacidad} personas</td>
                     <td>{lote.residente_id}</td>
                     <td>
-                      <Link to={`/lote/edit/${lote.id}`}>
-                        <Button variant="primary">Editar</Button>
-                      </Link>
-                    </td>
-                    <td>
-                      <Button
+                    <Button
                         variant="danger"
                         onClick={() => updateCondominio(lote.id)}
                       >

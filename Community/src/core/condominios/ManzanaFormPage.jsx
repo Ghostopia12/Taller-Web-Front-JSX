@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Button, Card, Container, Form, FormControl, FormGroup, FormSelect } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Alert, Button, Card, Container, Form, FormControl, FormGroup, Modal } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
-import { postSaveManzana, postSavePersona } from "../../services";
+import { postSaveManzana } from "../../services/condominioService/ManzanasService";
 
 const ManzanaFormPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [validated, setValidated] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
+    const [showMaxLotesAlert, setShowMaxLotesAlert] = useState(false);
 
     const [nroManzana, setNroManzana] = useState('');
     const [cantidadLotes, setCantidadLotes] = useState('');
-    const [condominioId, setCondominioId] = useState('');
 
     useEffect(() => {
         // Si necesitas alguna inicialización adicional, aquí puedes hacerla
@@ -26,13 +25,17 @@ const ManzanaFormPage = () => {
         setValidated(true);
         if (!isValid) return;
 
-        createManzana();
+        if (parseInt(cantidadLotes) > 100) {
+            setShowMaxLotesAlert(true);
+        } else {
+            createManzana();
+        }
     }
 
     const createManzana = () => {
         setShowAlertError(false);
 
-        postSaveManzana(getAuthToken(), {
+        postSaveManzana({
             condominioId_id: parseInt(id),
             nro_manzana: parseInt(nroManzana),
             cantidad_lotes: cantidadLotes
@@ -52,7 +55,6 @@ const ManzanaFormPage = () => {
     
     return (
         <>
-            
             <Container>
                 <Card className="mt-3">
                     <Card.Body>
@@ -77,7 +79,7 @@ const ManzanaFormPage = () => {
                                 <FormGroup>
                                     <Form.Label>Cantidad de Lotes</Form.Label>
                                     <FormControl 
-                                        type="text" 
+                                        type="number" 
                                         value={cantidadLotes} 
                                         onChange={(e) => setCantidadLotes(e.target.value)} 
                                         required 
@@ -93,6 +95,20 @@ const ManzanaFormPage = () => {
                     </Card.Body>
                 </Card>
             </Container>
+            
+            <Modal show={showMaxLotesAlert} onHide={() => setShowMaxLotesAlert(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Cantidad de lotes excedida</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    No se puede agregar una cantidad de lotes superior a 100.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowMaxLotesAlert(false)}>
+                        Cerrar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }

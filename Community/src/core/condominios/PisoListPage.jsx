@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { getListaPisos } from "../../services/PisosService";
+import { getListaPisos } from "../../services/condominioService/PisosService";
 
 const PisoListPage = () => {
   const { id } = useParams(); // Obtener el ID del condominio de la URL

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Container, Table, Button } from "react-bootstrap";
+import { Card, Container, Table, Button, Modal } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getListaPersonas, patchUpdateCondominio } from "../../services/condominioService/PersonasService";
@@ -8,8 +8,8 @@ const PersonaListPage = () => {
   const navigate = useNavigate();
   const [listaPersonas, setListaPersonas] = useState([]);
   const [showAlertError, setShowAlertError] = useState(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Estado para almacenar el ID del condominio a eliminar
   const { id } = useParams(); // Obtener el ID del usuario por URL
-
 
   useEffect(() => {
     loadPersonas();
@@ -20,7 +20,6 @@ const PersonaListPage = () => {
       localStorage.setItem('personaid', id);
       const personasUsuario = data.filter((persona) => persona.creador == id);
       setListaPersonas(personasUsuario);
-      console.log(personasUsuario);
     });
   };
 
@@ -46,8 +45,15 @@ const PersonaListPage = () => {
   const irA = (id, pagina) => {
     if (pagina === 'Manzana') navigate(`/manzana/list/${id}`);
     if (pagina === 'Bloque') navigate(`/bloque/list/${id}`);
-    
   }
+
+  const handleDeleteConfirmation = () => {
+    // Lógica para eliminar el condominio
+    if (confirmDeleteId) {
+      updateCondominio(confirmDeleteId);
+      setConfirmDeleteId(null); // Limpiar el ID de confirmación después de eliminar
+    }
+  };
 
   // Filtrar solo las personas con estado activo
   const personasActivas = listaPersonas.filter((persona) => !persona.activo);
@@ -90,12 +96,12 @@ const PersonaListPage = () => {
                       </Link>
                     </td>
                     <td>
-                      <Button variant="success" onClick={() => irA(id, persona.tipoDivisionId.nombre_division)}>Ver divisiones</Button>
+                      <Button variant="success" onClick={() => irA(persona.id, persona.tipoDivisionId.nombre_division)}>Ver divisiones</Button>
                     </td>
                     <td>
                       <Button
                         variant="danger"
-                        onClick={() => updateCondominio(persona.id)}
+                        onClick={() => setConfirmDeleteId(persona.id)} // Al hacer clic, establece el ID del condominio a eliminar
                       >
                         Eliminar
                       </Button>
@@ -107,6 +113,20 @@ const PersonaListPage = () => {
           </Card.Body>
         </Card>
       </Container>
+
+      {/* Pop-up de confirmación de eliminación */}
+      <Modal show={confirmDeleteId !== null} onHide={() => setConfirmDeleteId(null)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmación de eliminación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro de que quieres eliminar este condominio?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setConfirmDeleteId(null)}>Cancelar</Button>
+          <Button variant="danger" onClick={handleDeleteConfirmation}>Eliminar</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

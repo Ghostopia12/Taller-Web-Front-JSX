@@ -28,7 +28,16 @@ import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
 import PersonaListPage from "../core/condominios/PersonaListPage";
 import PersonaFormPage from "../core/condominios/PersonaFormPage";
 import CondominioEditPage from "../core/condominios/CondominioEditPage";
-
+import BloqueListPage from "../core/condominios/BloqueListPage";
+import BloqueFormPage from "../core/condominios/BloqueFormPage";
+import PisoListPage from "../core/condominios/PisoListPage";
+import PisoFormPage from "../core/condominios/PisoFormPage";
+import DptoListPage from "../core/condominios/DptoListPage";
+import DptoFormPage from "../core/condominios/DptoFormPage";
+import ManzanaListPage from "../core/condominios/ManzanaListPage";
+import ManzanaFormPage from "../core/condominios/ManzanaFormPage";
+import LoteListPage from "../core/condominios/LoteListPage";
+import LoteFormPage from "../core/condominios/LoteFormPage";
 
 const RouterConfig = () => {
   return (
@@ -68,6 +77,17 @@ const RouterConfig = () => {
       <Route path="/personas/:id" element={<PersonaListPage/>} />
       <Route path="/personas/create/:id" element={<PersonaFormPage/>} />
       <Route path="/condominio/edit/:id" element={<CondominioEditPage/>} />
+      <Route path="/bloque/list/:id" element={<BloqueListPage/>} />
+      <Route path="/bloques/create/:id" element={<BloqueFormPage/>} />
+      <Route path="/pisos/list/:id" element={<PisoListPage/>} />
+      <Route path="/pisos/create/:id" element={<PisoFormPage/>} />
+      <Route path="/dpto/list/:id" element={<DptoListPage/>} />
+      <Route path="/dpto/create/:id" element={<DptoFormPage/>} />
+      <Route path="/manzana/list/:id" element={<ManzanaListPage/>} />
+      <Route path="/manzanas/create/:id" element={<ManzanaFormPage/>} />
+      <Route path="lote/list/:id" element={<LoteListPage/>} />
+      <Route path="lotes/create/:id" element={<LoteFormPage/>} />
+
       
     </Routes>
   );

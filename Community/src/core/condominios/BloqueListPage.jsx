@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
-import { getListaBloques } from "../../services/BloquesService";
+import { getListaBloques } from "../../services/condominioService/BloquesService";
 
 const BloqueListPage = () => {
   const { id } = useParams(); // Obtener el ID del condominio de la URL
@@ -13,7 +12,7 @@ const BloqueListPage = () => {
   }, [id]); // Volver a cargar los bloques cuando cambie el ID del condominio
 
   const loadBloques = () => {
-    getListaBloques(getAuthToken()).then((data) => {
+    getListaBloques().then((data) => {
       // Filtrar los bloques para mostrar solo los del condominio específico
       const bloquesCondominio = data.filter((bloque) => bloque.condominioId.id === parseInt(id));
       setListaBloques(bloquesCondominio);

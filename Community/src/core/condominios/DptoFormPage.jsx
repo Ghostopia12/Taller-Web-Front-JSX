@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -9,8 +9,7 @@ import {
   FormGroup,
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
-import { postSaveInmueble } from "../../services/InmueblesService";
+import { postSaveInmueble } from "../../services/condominioService/InmueblesService";
 
 const DptoFormPage = () => {
   const navigate = useNavigate();

@@ -1,8 +1,7 @@
 import  { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { getAuthToken } from "../../utilities/TokenUtilities";
-import { getListaManzanas } from "../../services/ManzanasService";
+import { getListaManzanas } from "../../services/condominioService/ManzanasService";
 
 const ManzanaListPage = () => {
   const { id } = useParams(); // Obtener el ID del condominio de la URL
@@ -13,7 +12,7 @@ const ManzanaListPage = () => {
   }, [id]); // Volver a cargar las manzanas cuando cambie el ID del condominio
 
   const loadManzanas = () => {
-    getListaManzanas(getAuthToken()).then((data) => {
+    getListaManzanas().then((data) => {
       // Filtrar las manzanas para mostrar solo las del condominio específico
       const manzanasCondominio = data.filter(
         (manzana) => manzana.condominioId.id === parseInt(id)

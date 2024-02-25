@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { postSavePiso } from "../../services/PisosService";
+import { postSavePiso } from "../../services/condominioService/PisosService";
 
 const PisoFormPage = () => {
   const navigate = useNavigate();
