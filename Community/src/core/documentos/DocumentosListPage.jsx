@@ -124,20 +124,20 @@ const DocumentosListPage = () => {
                       </Link>
                     </td>
                     <td>
-                      <button
+                      <Link
                         className="btn btn-danger"
                         onClick={() => eliminarDocumentos(documento.id)}
                       >
                         Eliminar
-                      </button>
+                      </Link>
                     </td>
                     <td>
-                    <button
+                    <Link
                         className="btn btn-warning"
                         onClick={() => desDocumento(documento.id)}
                       >
                         Deshabilitar
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

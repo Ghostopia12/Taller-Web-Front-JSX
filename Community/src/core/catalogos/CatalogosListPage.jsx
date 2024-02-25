@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Container, Card, Table } from "react-bootstrap";
-import { DOCUMENTO_EDIT_URL } from "../../routing/CONSTANTS";
-import { deleteDocumento, deshabilitarDocumento, getlistaCatalogos } from "../../services/comunicacion/DocumentoService";
+import { CATALOGO_EDIT_URL } from "../../routing/CONSTANTS";
 import { jwtDecode } from "jwt-decode";
 import { GetUsers } from "../../services/UserService";
 import { deleteCatalogo, deshabilitarCatalogo, getListaCatalogos } from "../../services/comunicacion/CatalogoService";
@@ -94,11 +93,10 @@ const CatalogosListPage = () => {
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Fecha y Hora</th>
-                  <th>Documento</th>
+                  <th>Documentos</th>
                   <th>Administrador</th>
                   <th></th>
-                  <th></th>
-                  <th></th>
+                  <th></th> 
                   <th></th>
                 </tr>
               </thead>
@@ -110,31 +108,29 @@ const CatalogosListPage = () => {
                     <td>{fechaHoraFormateada(catalogo.fechaHora)}</td>
                     <td>{catalogo.documentoId}</td>
                     <td>{catalogo.adminId}</td>
-                    <td></td>
-                    <td></td>
                     <td>
                       <Link
                         className="btn btn-primary"
-                        to={DOCUMENTO_EDIT_URL + "/" + catalogo.id}
+                        to={CATALOGO_EDIT_URL + "/" + catalogo.id}
                       >
                         Editar
                       </Link>
                     </td>
                     <td>
-                      <button
+                      <Link
                         className="btn btn-danger"
                         onClick={() => eliminarCatalogos(catalogo.id)}
                       >
                         Eliminar
-                      </button>
+                      </Link>
                     </td>
                     <td>
-                    <button
+                    <Link
                         className="btn btn-warning"
                         onClick={() => desCatalogo(catalogo.id)}
                       >
                         Deshabilitar
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

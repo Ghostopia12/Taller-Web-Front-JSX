@@ -9,9 +9,9 @@ import {
   FormGroup,
 } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { addDocumento, getDocumento, updateDocumento } from "../../services/comunicacion/DocumentoService";
-import { DOCUMENTO_LIST_URL } from "../../routing/CONSTANTS";
+import { CATALOGO_LIST_URL } from "../../routing/CONSTANTS";
 import { jwtDecode } from "jwt-decode";
+import { addCatalogo, getCatalogo, updateCatalogo } from "../../services/comunicacion/CatalogoService";
 
 
 
@@ -22,8 +22,7 @@ const CatalogosFormPage = () => {
   const [validated, setValidated] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
   const [nombre, setNombre] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [tipoDoc, setTipoDoc] = useState("");
+  const [documento, setDocumento] = useState("");
  const adminId = jwtDecode(localStorage.getItem("token"))[
   'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
 ]
@@ -32,10 +31,9 @@ console.log("adminId", adminId)
 
   useEffect(() => {
     if (id !== undefined) {
-        getDocumento(id).then((data) => {
+        getCatalogo(id).then((data) => {
           setNombre(data.nombre);
-          setMensaje(data.mensaje);
-          setTipoDoc(data.tipoDoc);
+          setDocumento(data.documentoId);
         });
     }
   }, [id]);
@@ -48,19 +46,18 @@ console.log("adminId", adminId)
     setValidated(true);
     if (isValid === true) {
       if (id === undefined) {
-        createDocumento();
+        createCatalogo();
       } else {
-        updateDocument();
+        updateCatalog();
       }
     }
   };
 
-  const createDocumento = () => {
+  const createCatalogo = () => {
     setShowAlertError(false);
-    addDocumento({
+    addCatalogo({
       nombre,
-      mensaje,
-      tipoDoc,
+      documento,
       adminId
     })
       .then((data) => {
@@ -68,7 +65,7 @@ console.log("adminId", adminId)
           setShowAlertError(true);
           return;
         }
-        navigate(DOCUMENTO_LIST_URL);
+        navigate(CATALOGO_LIST_URL);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -79,21 +76,19 @@ console.log("adminId", adminId)
       });
   };
 
-  const updateDocument = () => {
+  const updateCatalog = () => {
     setShowAlertError(false);
-    updateDocumento(id, {
+    updateCatalogo(id, {
       nombre,
-      mensaje,
-      tipoDoc,
+      documento,
       adminId
     })
       .then((data) => {
         if (!data.id) {
           setShowAlertError(true);
-          console.log("data actual", data);
           return;
         }
-        navigate(DOCUMENTO_LIST_URL);
+        navigate(CATALOGO_LIST_URL);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -109,7 +104,7 @@ console.log("adminId", adminId)
       <Container>
         <Card className="mt-3">
           <Card.Body>
-            <Card.Title>Formulario de documentos</Card.Title>
+            <Card.Title>Formulario de catalogos</Card.Title>
             <div>
               {showAlertError && (
                 <Alert variant="danger">
@@ -135,26 +130,26 @@ console.log("adminId", adminId)
                   </Form.Control.Feedback>
                 </FormGroup>
 
-                <FormGroup>
-                  <label>Mensaje</label>
+                {/* <FormGroup>
+                  <label>documento</label>
                   <FormControl
-                    value={mensaje}
+                    value={documento}
                     required
                     onChange={(e) => {
-                      setMensaje(e.target.value);
+                      setDocumento(e.target.value);
                     }}
                   />
                   <Form.Control.Feedback type="invalid">
-                    Necesitas un mensaje
+                    Necesitas un documento
                   </Form.Control.Feedback>
 
-                </FormGroup>
+                </FormGroup> */}
 
                 <FormGroup>
-                  <label>Tipo de documento</label>
+                  <label>Documentos</label>
                   <FormControl
                     as="select"
-                    value={tipoDoc}
+                    value={documento}
                     required
                     onChange={(e) => {
                       setTipoDoc(e.target.value);
