@@ -38,6 +38,10 @@ import ManzanaListPage from "../core/condominios/ManzanaListPage";
 import ManzanaFormPage from "../core/condominios/ManzanaFormPage";
 import LoteListPage from "../core/condominios/LoteListPage";
 import LoteFormPage from "../core/condominios/LoteFormPage";
+import InvitacionCasaForm from "../core/InvitacionCasa/InvitacionCasaFormPage";
+import InvitacionCasaList from "../core/InvitacionCasa/InvitacionCasaListPage";
+import InvitacionAreaComun from "../core/invitacionAreaComun/invitacionAreaComunFromPage";
+import InvitacionAreacomunList from "../core/invitacionAreaComun/invitacionAreaComunListPage";
 
 const RouterConfig = () => {
   return (
@@ -88,7 +92,12 @@ const RouterConfig = () => {
       <Route path="lote/list/:id" element={<LoteListPage/>} />
       <Route path="lotes/create/:id" element={<LoteFormPage/>} />
 
-      
+      <Route path= "/invitacionCasa" element= {<InvitacionCasaForm/>}/>
+      <Route path= "/invitacionCasa/:id" element= {<InvitacionCasaForm/>}/>
+      <Route path= "/listaInvitadosCasa" element= {<InvitacionCasaList/>}/>
+      <Route path= "/invitacionAreaComun/:id" element= {<InvitacionAreaComun/>}/>
+      <Route path= "/invitacionAreaComun" element= {<InvitacionAreaComun/>}/>
+      <Route path= "/listaInvitadosAreaComun" element= {<InvitacionAreacomunList/>}/>
     </Routes>
   );
 };
