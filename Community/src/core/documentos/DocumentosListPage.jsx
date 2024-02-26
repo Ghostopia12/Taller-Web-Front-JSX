@@ -94,7 +94,7 @@ const DocumentosListPage = () => {
                     <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{currentUser.username}</td>
                     <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}></td>
                     <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}></td>
-                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                    {documento.deshabilitado === false ? (<><td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
                         className="btn btn-primary"
                         to={DOCUMENTO_EDIT_URL + "/" + documento.id}
@@ -102,14 +102,15 @@ const DocumentosListPage = () => {
                         Editar
                       </Link>
                     </td>
-                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
-                      <Link
-                        className="btn btn-danger"
-                        onClick={() => eliminarDocumentos(documento.id)}
-                      >
-                        Eliminar
-                      </Link>
-                    </td>
+                      <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                        <Link
+                          className="btn btn-danger"
+                          onClick={() => eliminarDocumentos(documento.id)}
+                        >
+                          Eliminar
+                        </Link>
+                      </td></>) : null}
+
                     <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
                         className={`${documento.deshabilitado ? 'btn btn-success' : 'btn btn-warning'}`}

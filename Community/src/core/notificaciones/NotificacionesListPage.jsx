@@ -134,26 +134,36 @@ const NotificacionesListPage = () => {
           ariaHideApp={false}
         >
           {noti && (
-            <div>
+            <div className="card text-white bg-dark mb-2 p-4">
 
               <h2>Catálogo: {noti.catalogos.map(catalogo => catalogo.nombre).join(', ')}</h2>
               {noti.catalogos.map(catalogo => (
-                <div key={catalogo.id}>
+                <div key={catalogo.id} >
 
 
                   <ul>
-                    {catalogo.documentos.map(documento => (
-                      <div key={documento.id}>
-                        <li>Nombre: {documento.nombre}</li>
-                        <li>Mensaje: {documento.mensaje}</li>
-                        <li>Fecha y Hora: {new Date(documento.fechaHora).toLocaleString()}</li>
-                        <li>Tipo de Documento: {documento.tipoDoc}</li>
-                        <li>Admin ID: {documento.adminId}</li>
-                        <li>Deshabilitado: {documento.deshabilitado ? 'Sí' : 'No'}</li>
-                      </div>
+                    {catalogo.documentos && catalogo.documentos.length > 0 ? (
+                      catalogo.documentos.map(documento => (
+                        <div key={documento.id}>
+                          {documento.deshabilitado === false ? (
+                            <>
+                              <li>Nombre: {documento.nombre}</li>
+                              <li>Mensaje: {documento.mensaje}</li>
+                              <li>Fecha y Hora: {new Date(documento.fechaHora).toLocaleString()}</li>
+                              <li>Tipo de Documento: {documento.tipoDoc}</li>
+                              <li>Admin ID: {documento.adminId}</li>
+                              <li>Deshabilitado: {documento.deshabilitado ? 'Sí' : 'No'}</li>
+                            </>
+                          ) : (
+                            <h3>Documento deshabilitado</h3>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <h3>No hay documentos</h3>
+                    )}
 
 
-                    ))}
                   </ul>
                 </div>
               ))}
@@ -193,20 +203,19 @@ const NotificacionesListPage = () => {
                     <td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       {listaUsuarios.find(usuario => usuario.id === notificacion.usuarioId)?.username || 'Cargando...'}
                     </td>
-                    <td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                    {notificacion.deshabilitado === false ? (<><td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link className="btn btn-success" onClick={() => setmodalIsOpen(notificacion.id)}>
-                        Ver mas
+                        Ver más
                       </Link>
                     </td>
-
-                    <td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
-                      <Link
-                        className="btn btn-danger"
-                        onClick={() => eliminarNotificacion(notificacion.id)}
-                      >
-                        Eliminar
-                      </Link>
-                    </td>
+                      <td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                        <Link
+                          className="btn btn-danger"
+                          onClick={() => eliminarNotificacion(notificacion.id)}
+                        >
+                          Eliminar
+                        </Link>
+                      </td></>) : null}
                     <td style={{ backgroundColor: notificacion.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
                         className={`${notificacion.deshabilitado ? 'btn btn-success' : 'btn btn-warning'}`}

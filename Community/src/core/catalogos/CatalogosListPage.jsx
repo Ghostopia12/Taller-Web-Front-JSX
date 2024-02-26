@@ -145,8 +145,8 @@ const CatalogosListPage = () => {
           contentLabel="Example Modal"
           ariaHideApp={false}
         >
-          <h2>{modalIsOpen && modalIsOpen.nombre}</h2>
-          <Link className="btn btn-success" style={{marginBottom: 12}} onClick={() => setCreate(true)}>
+          <div className="card text-white bg-dark mb-2 p-4"><h2>{modalIsOpen && modalIsOpen.nombre}</h2>
+          <Link className="btn btn-success" style={{ marginBottom: 12 }} onClick={() => setCreate(true)}>
             +
           </Link>
           {create && (
@@ -179,8 +179,8 @@ const CatalogosListPage = () => {
           )}
           {docId && (
             <Link
-              className="link-button" style={{marginBottom: 12}}
-              onClick={() => {agregarDocumento(modalIsOpen.id, docId); setCreate(false); setDocId(""); } }
+              className="link-button" style={{ marginBottom: 12 }}
+              onClick={() => { agregarDocumento(modalIsOpen.id, docId); setCreate(false); setDocId(""); }}
             >
               Guardar
             </Link>
@@ -188,22 +188,25 @@ const CatalogosListPage = () => {
           <div>
             {listaDocumentos && listaDocumentos.length > 0 ? (
               listaDocumentos.map((documento) => (
-                <Card key={documento.id} className="text-white bg-dark mb-2" style={{ marginBottom: 24 }}>
+                <Card key={documento.id}  style={{ marginBottom: 24 }}>
                   <Card.Body>
-                    <Card.Title>{documento.nombre}</Card.Title>
-                    <Card.Text>{documento.mensaje}</Card.Text>
-                    <Card.Text>{fechaHoraFormateada(documento.fechaHora)}</Card.Text>
-                    <Card.Text>{documento.tipoDoc}</Card.Text>
-                    <Card.Link onClick={() => eliminarDocumento(modalIsOpen.id, documento.id)}>
-                      Eliminar
-                    </Card.Link>
+                    {documento.deshabilitado === false ? (<><Card.Title>{documento.nombre}</Card.Title>
+                      <Card.Text>{documento.mensaje}</Card.Text>
+                      <Card.Text>{fechaHoraFormateada(documento.fechaHora)}</Card.Text>
+                      <Card.Text>{documento.tipoDoc}</Card.Text>
+                      <Card.Text>Deshabilitado: {documento.deshabilitado ? 'Sí' : 'No'}</Card.Text>
+                      <Card.Link onClick={() => eliminarDocumento(modalIsOpen.id, documento.id)}>
+                        Eliminar
+                      </Card.Link></>) : (<Card.Title>El documento esta deshabilitado</Card.Title>)}
+
                   </Card.Body>
                 </Card>
               ))
             ) : (
-              <div>No hay documentos</div>
+              <Card.Title>No hay documentos</Card.Title>
             )}
-          </div>
+          </div></div>
+          
 
         </Modal>
       </div>
@@ -237,30 +240,31 @@ const CatalogosListPage = () => {
                     <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{catalogo.id}</td>
                     <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{catalogo.nombre}</td>
                     <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{fechaHoraFormateada(catalogo.fechaHora)}</td>
-                    <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                    {catalogo.deshabilitado === false ? (<><td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link className="btn btn-success" onClick={() => setmodalIsOpen(catalogo)}>
                         Ver
                       </Link>
                     </td>
-                    <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{currentUser.username}</td>
+                      <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{currentUser.username}</td>
+                      <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                        <Link
+                          className="btn btn-primary"
+                          to={CATALOGO_EDIT_URL + "/" + catalogo.id}
+                        >
+                          Editar
+                        </Link>
+                      </td>
+                      <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                        <Link
+                          className="btn btn-danger"
+                          onClick={() => eliminarCatalogos(catalogo.id)}
+                        >
+                          Eliminar
+                        </Link>
+                      </td></>) : null}
+
                     <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
-                        className="btn btn-primary"
-                        to={CATALOGO_EDIT_URL + "/" + catalogo.id}
-                      >
-                        Editar
-                      </Link>
-                    </td>
-                    <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
-                      <Link
-                        className="btn btn-danger"
-                        onClick={() => eliminarCatalogos(catalogo.id)}
-                      >
-                        Eliminar
-                      </Link>
-                    </td>
-                    <td style={{ backgroundColor: catalogo.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
-                    <Link
                         className={`${catalogo.deshabilitado ? 'btn btn-success' : 'btn btn-warning'}`}
                         onClick={() => {
                           if (catalogo.deshabilitado) {

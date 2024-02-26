@@ -44,6 +44,7 @@ import DeudasResidencia from "../core/cuentas/deuda/DeudasResidencia";
 import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
 import NotificacionesListPage from "../core/notificaciones/NotificacionesListPage";
 import NotificacionesFormPage from "../core/notificaciones/NotificacionesFormPage";
+import NotificacionesUsuario from "../core/notificaciones/NotificacionesUsuario";
 
 const RouterConfig = () => {
   return (
@@ -89,6 +90,7 @@ const RouterConfig = () => {
 
       <Route path="/listaNotificaciones" element={<NotificacionesListPage />} />
       <Route path="/crearNotificacion" element={<NotificacionesFormPage />} />
+      <Route path="/myNoti" element={<NotificacionesUsuario />} />
 
 
       <Route path="/personas/:id" element={<PersonaListPage/>} />

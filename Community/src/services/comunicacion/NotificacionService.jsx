@@ -126,7 +126,7 @@ export const deleteNotificacion = (id) => {
   export const getNotificacionByUsuario = (id) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch("http://localhost:3000/notificaciones/" + id + "/usuario", {
+        .get("http://localhost:3000/notificaciones/" + id + "/usuario", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -146,7 +146,7 @@ export const deleteNotificacion = (id) => {
   export const NroNotificaciones = (id) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch("http://localhost:3000/notificaciones/count" + id, {
+        .get("http://localhost:3000/notificaciones/count/" + id, {
           headers: {
             "Content-Type": "application/json",
           },

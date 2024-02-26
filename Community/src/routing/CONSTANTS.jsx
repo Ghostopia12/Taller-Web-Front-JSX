@@ -18,6 +18,7 @@ export const CATALOGO_CREATE_URL = "/crearCatalogo"
 export const CATALOGO_EDIT_URL = "/editarCatalogo"
 export const NOTIFICACION_LIST_URL = "/listaNotificaciones"
 export const NOTIFICACION_CREATE_URL = "/crearNotificacion"
+export const NOTIFICACION_USUARIO_URL = "/myNoti"
 export const PERSONAS_LIST_URL = "/personas/";
 export const PERSONA_CREATE_URL = "/personas/create/";
 export const CONDOMINIO_EDIT_URL = "/condominio/edit/";
