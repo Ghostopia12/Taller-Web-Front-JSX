@@ -3,9 +3,7 @@ import axios from "axios";
 export const createParametro = async (parametro) => {
     const response = await axios.post(
       `http://localhost:8080/api/parametros/create?role=${1}`,//role del localStorage
-      JSON.stringify({
         parametro
-      }),
     );
     if(response.status == 200){
       console.info("Parametro creada");
@@ -14,7 +12,7 @@ export const createParametro = async (parametro) => {
 };
 
 export const getAllParametros = async () => {
-    const response = await axios.get(`http://localhost:8080/api/parametros/all?enabled=false?role=${1}`);
+    const response = await axios.get(`http://localhost:8080/api/parametros/all?role=${1}`);
     if(response.status == 200){
       console.info("---- exito ----")
     }
