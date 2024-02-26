@@ -42,6 +42,8 @@ import LoteListPage from "../core/condominios/LoteListPage";
 import LoteFormPage from "../core/condominios/LoteFormPage";
 import DeudasResidencia from "../core/cuentas/deuda/DeudasResidencia";
 import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
+import NotificacionesListPage from "../core/notificaciones/NotificacionesListPage";
+import NotificacionesFormPage from "../core/notificaciones/NotificacionesFormPage";
 
 const RouterConfig = () => {
   return (
@@ -83,6 +85,9 @@ const RouterConfig = () => {
       <Route path="/listaCatalogos" element={<CatalogosListPage />} />
       <Route path="/crearCatalogo" element={<CatalogosFormPage />} />
       <Route path="/editarCatalogo/:id" element={<CatalogosFormPage />} />
+
+      <Route path="/listaNotificaciones" element={<NotificacionesListPage />} />
+      <Route path="/crearNotificacion" element={<NotificacionesFormPage />} />
 
 
       <Route path="/personas/:id" element={<PersonaListPage/>} />
