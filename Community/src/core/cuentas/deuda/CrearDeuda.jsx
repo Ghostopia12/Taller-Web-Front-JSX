@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { createDeuda } from "../../../services/cuentas/DeudaService";
+import { GetFromStorage } from "../../../services/StorageService";
+import { Navigate } from "react-router-dom";
 
 const CrearDeuda = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,14 @@ const CrearDeuda = () => {
     fecha_limite: "",
     tipo: "",
   });
+
+  useEffect(() => {
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -17,11 +17,11 @@ import SolicitudListPage from "../core/solicitudes/SolicitudListPage";
 import SolicitudCreatePage from "../core/solicitudes/SolicitudCreatePage";
 import SolicitudDetailPage from "../core/solicitudes/SolicitudDetailPage";
 import DeudasList from "../core/cuentas/deuda/DeudasList";
-import CrearPagos from "../core/cuentas/pago/CrearPago";
+import CrearPago from "../core/cuentas/pago/CrearPago";
 import PagosList from "../core/cuentas/pago/PagosList";
 import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
-import CrearParametro from "../core/cuentas/parametro/CrearParametro";
+import FormParametro from "../core/cuentas/parametro/FormParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
 import DocumentosListPage from "../core/documentos/DocumentosListPage";
 import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
@@ -38,10 +38,13 @@ import ManzanaListPage from "../core/condominios/ManzanaListPage";
 import ManzanaFormPage from "../core/condominios/ManzanaFormPage";
 import LoteListPage from "../core/condominios/LoteListPage";
 import LoteFormPage from "../core/condominios/LoteFormPage";
+import DeudasResidencia from "../core/cuentas/deuda/DeudasResidencia";
+import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
 import InvitacionCasaForm from "../core/InvitacionCasa/InvitacionCasaFormPage";
 import InvitacionCasaList from "../core/InvitacionCasa/InvitacionCasaListPage";
 import InvitacionAreaComun from "../core/invitacionAreaComun/invitacionAreaComunFromPage";
 import InvitacionAreacomunList from "../core/invitacionAreaComun/invitacionAreaComunListPage";
+
 
 const RouterConfig = () => {
   return (
@@ -50,14 +53,18 @@ const RouterConfig = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/adminPanel" element={<AdminPanel />} />
+
       <Route path="/deudas" element={<DeudasList />} />
       <Route path="/deudas/crear" element={<CrearDeuda />} />
+      <Route path="/deudas/residencia/:id" element={<DeudasResidencia/>} />
+      <Route path="/pago/residencia/:id" element={<CrearPago/>} />
+      <Route path="/pagos/listaxpagar" element={<ListaResidencias />} />
       <Route path="/pagos" element={<PagosList />} />
-      <Route path="/pagos/crear" element={<CrearPagos />} />
       <Route path="/gastos" element={<GastosList />} />
       <Route path="/gastos/crear" element={<CrearGastos />} />
       <Route path="/parametros" element={<ParametrosList />} />
-      <Route path="/parametros/crear" element={<CrearParametro />} />
+      <Route path="/parametros/crear" element={<FormParametro />} />
+      <Route path="/parametros/editar/:id" element={<FormParametro />} />
 
       <Route path="/listaAreasComunes" element={<AreaComunListPage />} />
       <Route path="/crearAreaComun" element={<AreaComunCreatePage />} />
@@ -91,13 +98,14 @@ const RouterConfig = () => {
       <Route path="/manzanas/create/:id" element={<ManzanaFormPage/>} />
       <Route path="lote/list/:id" element={<LoteListPage/>} />
       <Route path="lotes/create/:id" element={<LoteFormPage/>} />
-
       <Route path= "/invitacionCasa" element= {<InvitacionCasaForm/>}/>
       <Route path= "/invitacionCasa/:id" element= {<InvitacionCasaForm/>}/>
       <Route path= "/listaInvitadosCasa" element= {<InvitacionCasaList/>}/>
       <Route path= "/invitacionAreaComun/:id" element= {<InvitacionAreaComun/>}/>
       <Route path= "/invitacionAreaComun" element= {<InvitacionAreaComun/>}/>
       <Route path= "/listaInvitadosAreaComun" element= {<InvitacionAreacomunList/>}/>
+
+      
     </Routes>
   );
 };

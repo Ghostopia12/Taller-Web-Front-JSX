@@ -94,6 +94,7 @@ const SisNavbar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Inicio</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             {isAdmin && (
               <>
                 <NavDropdown title="Áreas Comunes" id="basic-nav-dropdown">
@@ -142,15 +143,19 @@ const SisNavbar = () => {
                 </NavDropdown>
               </>
             )}
-            {isContable && (
+            {isPropietario && (
               <NavDropdown title="Cuentas" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
                 <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
-                <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
-                <NavDropdown.Item href="/parametros">
-                  Parametros
-                </NavDropdown.Item>
               </NavDropdown>
+            )}
+            {isContable && (
+              <NavDropdown title="Cuentas" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
+              <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
+              <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
+              <NavDropdown.Item href="/parametros">Parametros</NavDropdown.Item>
+            </NavDropdown>
             )}
             {isGuardia && (
               <>

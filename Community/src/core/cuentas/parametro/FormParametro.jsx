@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { createParametro } from "../../../services/cuentas/ParametroService";
+import { createParametro, getParametroById } from "../../../services/cuentas/ParametroService";
+import { GetFromStorage } from "../../../services/StorageService";
+import { Navigate, useParams } from "react-router-dom";
 
-const CrearParametro = () => {
+const FormParametro = () => {
   const [formData, setFormData] = useState({
     monto: "",
     vencimiento: "",
     activo: false,
     tipo: "",
   });
+
+  let { id } = useParams();
+
+
+  useEffect(() => {
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }
+    if(id){
+        loadParametro(id);
+    }
+  }, []);
+
+  const loadParametro = (id) => {
+    getParametroById(id).then((data) => {
+        console.log(data);
+        setFormData(data);
+/*             getJuegoParticipants(getAuthToken(),data.id).then((data) => {
+            setParticipantesJuego(data);
+        }); */
+    });
+}
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -74,10 +100,10 @@ const CrearParametro = () => {
         </Form.Select>
       </Form.Group>
       <Button variant="primary" type="submit">
-        Crear
+        Guardar
       </Button>
     </Form>
   );
 };
 
-export default CrearParametro;
+export default FormParametro;

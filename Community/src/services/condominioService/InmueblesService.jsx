@@ -10,7 +10,6 @@ export const getListaInmuebles = () => {
             },
         })
         .then((response) => {
-            console.log(response);
             resolve(response.data);
         })
         .catch((error) => {
@@ -76,5 +75,15 @@ export const patchUpdateEstadoConstruccion = (id, inmueble) => {
         });
     });
 }
+
+export const getInmuebleXUsuario = async (id) => {
+    const response = await axios.get(
+      `${BASE_URL_MAQUETACION}/webapi/inmuebles/${id}/residencia-usuario/`, {
+        headers: {
+        "Content-Type": "application/json",
+        },
+    });
+    return response.data;
+};
     
 

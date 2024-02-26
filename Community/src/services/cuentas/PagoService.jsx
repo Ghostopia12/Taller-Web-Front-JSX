@@ -3,9 +3,7 @@ import axios from "axios";
 export const createPago = async (pago) => {
     const response = await axios.post(
       `http://localhost:8080/api/pagos/create?role=${1}`,//role del localStorage
-      JSON.stringify({
         pago
-      }),
     );
     if(response.status == 200){
       console.info("Pago creada");
@@ -14,7 +12,7 @@ export const createPago = async (pago) => {
 };
 
 export const getAllPagos = async () => {
-    const response = await axios.get(`http://localhost:8080/api/pagos/all?enabled=false?role=${1}`);
+    const response = await axios.get(`http://localhost:8080/api/pagos/all?role=${1}`);
     if(response.status == 200){
       console.info("---- exito ----")
     }
@@ -35,11 +33,17 @@ export const getPagoByDeudaId = async (id) => {
   return response.data;
 };
 
-export const getPagoByUsuarioId = async (id) => {
-  const response = await axios.get(
-    `http://localhost:8080/api/pagos/usuario/${id}?role=${1}`
-  );
-  return response.data;
+export const getPagoByDeudaIds = async (ids) => {
+  try {
+    const response = await axios.post(
+      'http://localhost:8080/api/pagos/deuda?role=1',
+      ids
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 };
 
 export const getPagoByContableId = async (id) => {

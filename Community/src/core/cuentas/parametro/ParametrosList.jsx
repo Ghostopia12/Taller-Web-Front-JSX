@@ -1,16 +1,22 @@
 import  { useEffect, useState } from 'react'
 import { getAllParametros } from '../../../services/cuentas/ParametroService'
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import './ParametrosStyle.css'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { GetFromStorage } from '../../../services/StorageService';
 const ParametrosList = () => {
 
   const [listaParametros, setListaParametros] = useState([]);
 
   useEffect(() => {
     document.title = 'Parametros'
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }
     getAllParametros().then(response => {
-      setListaParametros(response);
+      setListaParametros(response.parametros);
       console.log(response);
     })
     
@@ -35,6 +41,11 @@ const ParametrosList = () => {
             <td>{item.activo ? "Sí" : "No"}</td>
             <td>{item.vencimiento}</td>
             <td>{item.tipo}</td>
+            <td>
+              <Link to={`/parametros/editar/${item.id}`}>
+                <Button variant="primary">Editar</Button>
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>
