@@ -120,3 +120,82 @@ export const deleteCatalogo = (id) => {
   }
 
 
+  export const habilitarCatalogo = (id) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch("http://localhost:3000/catalogo/" + id + "/enable", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+
+  export const obtenerDocumentosPorCatalogo = (id) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("http://localhost:3000/catalogo/" + id + "/documentos", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+  export const eliminarDocumentoEnCatalogo = (catalogoId, documentoId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch("http://localhost:3000/catalogo/" + catalogoId + "/remove-documento/" + documentoId, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+
+  export const agregarDocumentoToCatalogo = (catalogoId, documentoId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch("http://localhost:3000/catalogo/" + catalogoId + "/add-documento/" + documentoId, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+
+

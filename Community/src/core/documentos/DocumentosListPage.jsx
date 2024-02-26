@@ -4,44 +4,13 @@ import { Link } from "react-router-dom";
 
 import { Container, Card, Table } from "react-bootstrap";
 import { DOCUMENTO_EDIT_URL } from "../../routing/CONSTANTS";
-import { deleteDocumento, deshabilitarDocumento, getListaDocumentos } from "../../services/comunicacion/DocumentoService";
-import { jwtDecode } from "jwt-decode";
-import { GetUsers } from "../../services/UserService";
+import { deleteDocumento, deshabilitarDocumento, getListaDocumentos, habilitarDocumento } from "../../services/comunicacion/DocumentoService";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 
 const DocumentosListPage = () => {
   const [listaDocumentos, setListaDocumentos] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        // Assuming localStorage.getItem("token") is not null or undefined
-        const decodedToken = jwtDecode(localStorage.getItem("token"));
-        const userId = jwtDecode(localStorage.getItem("token"))[
-          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-        ]
-
-        const users = await GetUsers(); // Assuming GetUsers() returns a Promise of user array
-        console.log(users.result);
-
-        // Find the current user by ID
-        const currentUser = users.result.find(user => user.id === userId);
-        console.log("xd",currentUser);
-
-        if (currentUser) {
-          console.log("username", currentUser.username);
-          setCurrentUser(currentUser); // Store the current user in state
-        } else {
-          console.log("Usuario no encontrado");
-        }
-      } catch (error) {
-        console.error("Error fetching current user:", error);
-      }
-    };
-
-    fetchCurrentUser();
-  }, []);
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     loadDocumentos();
@@ -69,6 +38,15 @@ const DocumentosListPage = () => {
     }
   }
 
+
+  const habDocumento = (id) => {
+    if (window.confirm("¿Estas seguro que deseas habilitar este documento?")) {
+      habilitarDocumento(id).then(() => {
+        loadDocumentos();
+      });
+    }
+  }
+
   const fechaHoraFormateada = (fechaHora) => {
     const fecha = new Date(fechaHora);
     const options = {
@@ -84,7 +62,7 @@ const DocumentosListPage = () => {
 
   return (
     <>
-      <Container style={{marginTop: '24px'}}>
+      <Container style={{ marginTop: '24px' }}>
         <Card>
           <Card.Body>
             <Card.Title>Lista de documentos</Card.Title>
@@ -107,15 +85,16 @@ const DocumentosListPage = () => {
               <tbody>
                 {listaDocumentos.map((documento) => (
                   <tr key={documento.id}>
-                    <td>{documento.id}</td>
-                    <td>{documento.nombre}</td>
-                    <td>{documento.mensaje}</td>
-                    <td>{fechaHoraFormateada(documento.fechaHora)}</td>
-                    <td>{documento.tipoDoc}</td>
-                    <td>{}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{documento.id}</td>
+
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{documento.nombre}</td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{documento.mensaje}</td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{fechaHoraFormateada(documento.fechaHora)}</td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{documento.tipoDoc}</td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>{currentUser.username}</td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}></td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}></td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
                         className="btn btn-primary"
                         to={DOCUMENTO_EDIT_URL + "/" + documento.id}
@@ -123,7 +102,7 @@ const DocumentosListPage = () => {
                         Editar
                       </Link>
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
                       <Link
                         className="btn btn-danger"
                         onClick={() => eliminarDocumentos(documento.id)}
@@ -131,12 +110,20 @@ const DocumentosListPage = () => {
                         Eliminar
                       </Link>
                     </td>
-                    <td>
-                    <Link
-                        className="btn btn-warning"
-                        onClick={() => desDocumento(documento.id)}
+                    <td style={{ backgroundColor: documento.deshabilitado ? 'rgba(128, 128, 128, 0.5)' : 'transparent' }}>
+                      <Link
+                        className={`${documento.deshabilitado ? 'btn btn-success' : 'btn btn-warning'}`}
+                        onClick={() => {
+                          if (documento.deshabilitado) {
+                            habDocumento(documento.id)
+                          } else {
+                            desDocumento(documento.id)
+                          }
+
+                        }}
                       >
-                        Deshabilitar
+                        {documento.deshabilitado ? 'Habilitar' : 'Deshabilitar'}
+
                       </Link>
                     </td>
                   </tr>

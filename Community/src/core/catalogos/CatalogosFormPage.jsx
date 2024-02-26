@@ -145,7 +145,7 @@ console.log("adminId", adminId)
 
                 </FormGroup> */}
 
-                <FormGroup>
+                {/* <FormGroup>
                   <label>Documentos</label>
                   <FormControl
                     as="select"
@@ -162,7 +162,7 @@ console.log("adminId", adminId)
                   <Form.Control.Feedback type="invalid">
                     Necesitas seleccionar un tipo de documento
                   </Form.Control.Feedback>
-                </FormGroup>
+                </FormGroup> */}
 
 
                 <FormGroup style={{display : "none"}}>
@@ -179,7 +179,7 @@ console.log("adminId", adminId)
                   </Form.Control.Feedback>
                 </FormGroup>
 
-                <div className="mt-3">
+                <div className="">
                   <Button type="submit">Guardar</Button>
                 </div>
               </Form>

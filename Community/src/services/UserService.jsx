@@ -27,3 +27,13 @@ export const GetUsers = async () => {
     }
 }
 
+
+export const GetUserById = async (id) => {
+    try {
+        const response = await axios.get('http://localhost:5027/api/Usuarios/' + id, getHeaders());
+        return response.data;
+    } catch (error) {
+        throw new Error('GetUsers failed');
+    }
+}
+
