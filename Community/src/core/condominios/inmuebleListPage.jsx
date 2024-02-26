@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Container, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { getAuthToken } from "../../utilities/TokenUtilities";

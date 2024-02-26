@@ -17,7 +17,7 @@ import SolicitudListPage from "../core/solicitudes/SolicitudListPage";
 import SolicitudCreatePage from "../core/solicitudes/SolicitudCreatePage";
 import SolicitudDetailPage from "../core/solicitudes/SolicitudDetailPage";
 import DeudasList from "../core/cuentas/deuda/DeudasList";
-import CrearPagos from "../core/cuentas/pago/CrearPago";
+import CrearPago from "../core/cuentas/pago/CrearPago";
 import PagosList from "../core/cuentas/pago/PagosList";
 import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
@@ -38,6 +38,8 @@ import ManzanaListPage from "../core/condominios/ManzanaListPage";
 import ManzanaFormPage from "../core/condominios/ManzanaFormPage";
 import LoteListPage from "../core/condominios/LoteListPage";
 import LoteFormPage from "../core/condominios/LoteFormPage";
+import DeudasResidencia from "../core/cuentas/deuda/DeudasResidencia";
+import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
 
 const RouterConfig = () => {
   return (
@@ -46,10 +48,13 @@ const RouterConfig = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/adminPanel" element={<AdminPanel />} />
+
       <Route path="/deudas" element={<DeudasList />} />
       <Route path="/deudas/crear" element={<CrearDeuda />} />
+      <Route path="/deudas/residencia/:id" element={<DeudasResidencia/>} />
+      <Route path="/pago/residencia/:id" element={<CrearPago/>} />
+      <Route path="/pagos/listaxpagar" element={<ListaResidencias />} />
       <Route path="/pagos" element={<PagosList />} />
-      <Route path="/pagos/crear" element={<CrearPagos />} />
       <Route path="/gastos" element={<GastosList />} />
       <Route path="/gastos/crear" element={<CrearGastos />} />
       <Route path="/parametros" element={<ParametrosList />} />
@@ -88,7 +93,7 @@ const RouterConfig = () => {
       <Route path="lote/list/:id" element={<LoteListPage/>} />
       <Route path="lotes/create/:id" element={<LoteFormPage/>} />
 
-      
+
     </Routes>
   );
 };

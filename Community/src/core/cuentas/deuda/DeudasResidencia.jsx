@@ -1,61 +1,52 @@
 import  { useEffect, useState } from 'react'
-import { getAllDeudas, getDeudaByResidenciaIds } from '../../../services/cuentas/DeudaService'
-import { Table } from 'react-bootstrap';
+import { getDeudaByResidenciaIds } from '../../../services/cuentas/DeudaService'
+import { Button, Table } from 'react-bootstrap';
 import './DeudasStyle.css'
-import { Link } from 'react-router-dom';
-import { getInmuebleXUsuario } from '../../../services/condominioService/InmueblesService';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { GetFromStorage } from '../../../services/StorageService';
-const DeudasList = () => {
+const DeudasResidencia = () => {
 
   const [listaDeudas, setListaDeudas] = useState([]);
-  const [isContable, setIsContable] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+/*   const [isContable, setIsContable] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); */
+  const { id } = useParams();//id de la residencia
+
 
 
   useEffect(() => {
-    const rolesFromStorage = GetFromStorage("roles");
+    document.title = 'Deudas Residencia'
+/*     const rolesFromStorage = GetFromStorage("roles");
     setIsContable(
       rolesFromStorage?.length !== 0 && rolesFromStorage.includes("CONTABLE")
     );
     setIsAdmin(
       rolesFromStorage?.length !== 0 && rolesFromStorage.includes("ADMIN")
     );
-    const userId = localStorage.getItem("userId");
     if(isContable || isAdmin){
-      getAllDeudas().then(response => {
-        setListaDeudas(response);
-        console.log(response);
-      })
-    }else{
-      getInmuebleXUsuario(userId).then(response => {
-        const array = Object.values(response).map(obj => obj.id);
-        getDeudaByResidenciaIds(array).then(response => {
-          setListaDeudas(response);
-          console.log(response);
-        })
-      });
-    }
-/*     getInmuebleXUsuario(userId).then(response => {
-      const array = Object.values(response).map(obj => obj.id);
-      console.log(array);
+      const array = [id];
       getDeudaByResidenciaIds(array).then(response => {
         setListaDeudas(response);
         console.log(response);
       })
-    }); */
-    document.title = 'Deudas'
+    }else{
+      Navigate("/dashboard");
+    } */ 
 
-    
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }else{
+      const array = [parseInt(id)];
+      getDeudaByResidenciaIds(array).then(response => {
+        setListaDeudas(response);
+        console.log(response);
+      })
+    }
   }, [])
   
   return (
     <div className='table-container'>
-      {isAdmin &&(
-          <Link to="/deudas/crear" className="btn btn-primary">Crear Deuda</Link>
-      )}
-      {isContable &&(
-          <Link to="/deudas/crear" className="btn btn-primary">Crear Deuda</Link>
-      )}
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -66,6 +57,7 @@ const DeudasList = () => {
           <th>Cancelada</th>
           <th>Fecha Limite</th>
           <th>Tipo</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -78,6 +70,11 @@ const DeudasList = () => {
             <td>{item.cancelada ? "Sí" : "No"}</td>
             <td>{item.fecha_limite}</td>
             <td>{item.tipo}</td>
+            <td>{/* si ya esta cancelada no deberia aparecer este boton */}
+              <Link to={`/pago/residencia/${item.id}`}>
+                <Button variant="primary">Pagar</Button>
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -86,4 +83,4 @@ const DeudasList = () => {
   )
 }
 
-export default DeudasList
+export default DeudasResidencia
