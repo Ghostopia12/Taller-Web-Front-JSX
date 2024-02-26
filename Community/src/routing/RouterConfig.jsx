@@ -45,6 +45,11 @@ import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
 import NotificacionesListPage from "../core/notificaciones/NotificacionesListPage";
 import NotificacionesFormPage from "../core/notificaciones/NotificacionesFormPage";
 import NotificacionesUsuario from "../core/notificaciones/NotificacionesUsuario";
+import InvitacionCasaForm from "../core/InvitacionCasa/InvitacionCasaFormPage";
+import InvitacionCasaList from "../core/InvitacionCasa/InvitacionCasaListPage";
+import InvitacionAreaComun from "../core/invitacionAreaComun/invitacionAreaComunFromPage";
+import InvitacionAreacomunList from "../core/invitacionAreaComun/invitacionAreaComunListPage";
+
 
 const RouterConfig = () => {
   return (
@@ -106,8 +111,14 @@ const RouterConfig = () => {
       <Route path="/manzanas/create/:id" element={<ManzanaFormPage/>} />
       <Route path="lote/list/:id" element={<LoteListPage/>} />
       <Route path="lotes/create/:id" element={<LoteFormPage/>} />
+      <Route path= "/invitacionCasa" element= {<InvitacionCasaForm/>}/>
+      <Route path= "/invitacionCasa/:id" element= {<InvitacionCasaForm/>}/>
+      <Route path= "/listaInvitadosCasa" element= {<InvitacionCasaList/>}/>
+      <Route path= "/invitacionAreaComun/:id" element= {<InvitacionAreaComun/>}/>
+      <Route path= "/invitacionAreaComun" element= {<InvitacionAreaComun/>}/>
+      <Route path= "/listaInvitadosAreaComun" element= {<InvitacionAreacomunList/>}/>
 
-
+      
     </Routes>
   );
 };

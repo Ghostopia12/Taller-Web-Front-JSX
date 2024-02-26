@@ -2,7 +2,11 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { GetFromStorage } from "../services/StorageService";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-
+import {
+  GetListaDuenos,
+  getresidencial,
+  getListaBloquesId,
+} from "../services/InvitacionAreaComunService";
 const SisNavbar = () => {
   const [isContable, setIsContable] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -11,20 +15,23 @@ const SisNavbar = () => {
   const [isPropietario, setIsPropietario] = useState(false);
   const [isTrabajador, setIsTrabajador] = useState(false);
   const [roleList, setRoleList] = useState([]);
-  const [userId, setUserId] = useState(1)
+  const [userId, setUserId] = useState(1);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const token = GetFromStorage("token");
     console.log(token);
+    localStorage.setItem("limite", 4);
     if (token) {
       const id = jwtDecode(localStorage.getItem("token"))[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
       ];
       setUserId(id);
+      localStorage.setItem("id", id);
       console.log(userId);
     }
+    obtenerRoles();
     fetchUsersRoles();
   }, []);
 
@@ -56,6 +63,29 @@ const SisNavbar = () => {
     setIsLoggedIn(rolesFromStorage?.length !== 0);
   };
 
+  const obtenerRoles = () => {
+    GetListaDuenos().then((response) => {
+      response.forEach((element) => {
+        if (parseInt(element.user_id) === parseInt(localStorage.getItem("id"))) {
+          console.log(element);
+          localStorage.setItem("rol", element.rol_id);
+        }
+      });
+    });
+    getresidencial(localStorage.getItem("id")).then((response2) => {
+      if (response2[0].manzanaId != null) {
+        localStorage.setItem(
+          "residencial_id",
+          response2[0].manzanaId.condominioId
+        );
+      } else {
+        getListaBloquesId(response2[0].pisoId.bloqueId).then((response3) => {
+          localStorage.setItem("residencial_id", response3[0].condominioId.id);
+        });
+      }
+    });
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -85,6 +115,19 @@ const SisNavbar = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                 )}
+                <NavDropdown title="Invitados casa" id="basic-nav-dropdown">
+                  <NavDropdown.Item href={"/listaInvitadosCasa"}>
+                    Lista
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown
+                  title="Invitados Area Comun"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href={"/listaInvitadosAreaComun"}>
+                    Lista
+                  </NavDropdown.Item>
+                </NavDropdown>
                 <NavDropdown title="Administracion" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/adminPanel">
                     Panel de administracion
@@ -130,7 +173,30 @@ const SisNavbar = () => {
               <NavDropdown.Item href="/parametros">Parametros</NavDropdown.Item>
             </NavDropdown>
             )}
-            {isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>}
+            {isGuardia && (
+              <>
+                <Nav.Link href="/guardia">Guardia</Nav.Link>
+                <NavDropdown title="Invitados casa" id="basic-nav-dropdown">
+                  <NavDropdown.Item href={"/listaInvitadosCasa"}>
+                    Lista
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={"/invitacionCasa"}>
+                    Crear
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown
+                  title="Invitados Area Comun"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href={"/listaInvitadosAreaComun"}>
+                    Lista
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={"/invitacionAreaComun"}>
+                    Crear
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
             {isResidente && (
               <>
                 <Nav.Link href="/residente">Residente</Nav.Link>
@@ -144,11 +210,51 @@ const SisNavbar = () => {
                   <NavDropdown.Item href="/listaSolicitudes">
                     Lista de Solicitudes
                   </NavDropdown.Item>
+                  <NavDropdown title="Invitados casa" id="basic-nav-dropdown">
+                    <NavDropdown.Item href={"/listaInvitadosCasa"}>
+                      Lista
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={"/invitacionCasa"}>
+                      Crear
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown
+                    title="Invitados Area Comun"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href={"/listaInvitadosAreaComun"}>
+                      Lista
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={"/invitacionAreaComun"}>
+                      Crear
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </NavDropdown>
               </>
             )}
             {isPropietario && (
-              <Nav.Link href="/propietario">Propietario</Nav.Link>
+              <>
+                <Nav.Link href="/propietario">Propietario</Nav.Link>
+                <NavDropdown title="Invitados casa" id="basic-nav-dropdown">
+                  <NavDropdown.Item href={"/listaInvitadosCasa"}>
+                    Lista
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={"/invitacionCasa"}>
+                    Crear
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown
+                  title="Invitados Area Comun"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href={"/listaInvitadosAreaComun"}>
+                    Lista
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={"/invitacionAreaComun"}>
+                    Crear
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
             )}
             {isTrabajador && <Nav.Link href="/trabajador">Trabajador</Nav.Link>}
           </Nav>
@@ -165,9 +271,11 @@ const SisNavbar = () => {
             ) : (
               <Nav.Link href="/login">Iniciar sesión</Nav.Link>
             )}
-            {roleList?.length != 0 && (roleList?.includes("ADMIN") || roleList?.includes("PROPIETARIO")) && (
-              <Nav.Link href="/register">Registra un usuario</Nav.Link>
-            )}
+            {roleList?.length != 0 &&
+              (roleList?.includes("ADMIN") ||
+                roleList?.includes("PROPIETARIO")) && (
+                <Nav.Link href="/register">Registra un usuario</Nav.Link>
+              )}
           </Nav>
         </Navbar.Collapse>
       </Container>

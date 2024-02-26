@@ -32,3 +32,8 @@ export const PISO_LIST_URL = "/pisos/list/";
 export const PISO_CREATE_URL = "/pisos/create/";
 export const DPTO_LIST_URL = "/dpto/list/";
 export const DPTO_CREATE_URL = "/dpto/create/";
+
+export const INVITACIONCASA_URL = "/invitacionCasa";
+export const LISTAINVITADOSCASA_URL = "/listaInvitadosCasa";
+export const INVITACIONAREACOMUN_URL = "/invitacionAreaComun";
+export const LISTAINVITADOSAREACOMUN_URL = "/listaInvitadosAreaComun";

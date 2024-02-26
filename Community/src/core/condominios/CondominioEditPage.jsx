@@ -1,4 +1,4 @@
-import { Alert, Button, Card, Container, Form, FormControl, FormGroup, FormSelect } from "react-bootstrap";
+import { Alert, Button, Card, Container, Form, FormControl, FormGroup } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PERSONAS_LIST_URL } from "../../routing/CONSTANTS";
