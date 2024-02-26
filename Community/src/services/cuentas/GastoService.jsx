@@ -3,10 +3,8 @@ import axios from "axios";
 export const createGasto = async (gasto) => {
     const response = await axios.post(
       `http://localhost:8080/api/gastos/create?role=${1}`,//role del localStorage
-      JSON.stringify({
         gasto
-      }),
-      {
+      ,{
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,7 +32,7 @@ export const updateGasto = async (id) => {
 };
 
 export const getAllGastos = async () => {
-    const response = await axios.get(`http://localhost:8080/api/gastos/all?enabled=false?role=${1}`);
+    const response = await axios.get(`http://localhost:8080/api/gastos/all?role=${1}`);
     if(response.status == 200){
       console.info("---- exito ----")
     }
@@ -69,7 +67,7 @@ export const getGastoByCondominioIds = async (ids) => {
 };
 
 
-export const getGastoCanceladoByResidenciaIds = async (ids, cancelada) => {
+export const getGastoCanceladoByCondominioIds = async (ids, cancelada) => {
   try {
     const response = await axios.post(
       `http://localhost:8080/api/gastos/condominio/gastos-canceladas?cancelada=${cancelada}`,

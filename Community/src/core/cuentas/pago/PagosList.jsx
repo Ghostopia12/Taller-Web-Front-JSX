@@ -1,9 +1,11 @@
 import  { useEffect, useState } from 'react'
-import { getAllPagos, getPagoByUsuarioId } from '../../../services/cuentas/PagoService'
+import { getAllPagos, getPagoByDeudaIds } from '../../../services/cuentas/PagoService'
 import { Table } from 'react-bootstrap';
 import './PagosStyle.css'
 import { Link } from 'react-router-dom';
 import { GetFromStorage } from '../../../services/StorageService';
+import { getInmuebleXUsuario } from '../../../services/condominioService/InmueblesService';
+import { getDeudaByResidenciaIds } from '../../../services/cuentas/DeudaService';
 const PagosList = () => {
 
   const [listaPagos, setListaPagos] = useState([]);
@@ -12,7 +14,7 @@ const PagosList = () => {
 
   useEffect(() => {
     document.title = 'Pagos'
-
+    const userId = localStorage.getItem("userId");
     const rolesFromStorage = GetFromStorage("roles");
     setIsContable(
       rolesFromStorage?.length !== 0 && rolesFromStorage.includes("CONTABLE")
@@ -20,18 +22,41 @@ const PagosList = () => {
     setIsAdmin(
       rolesFromStorage?.length !== 0 && rolesFromStorage.includes("ADMIN")
     );
-    const userId = localStorage.getItem("userId");
-    if(isContable || isAdmin){
+    if (rolesFromStorage?.length != 0 && (!rolesFromStorage?.includes("ADMIN") || !rolesFromStorage?.includes("CONTABLE")) ) {
+      getInmuebleXUsuario(userId).then(response => {
+        const array = Object.values(response).map(obj => obj.id);
+        getDeudaByResidenciaIds(array).then(resp => {
+          const array_deudas = Object.values(resp).map(obj => obj.id);
+          console.log(array_deudas);
+          getPagoByDeudaIds(array_deudas).then(response => {
+            setListaPagos(response);
+            console.log(response);
+          });
+        })
+      });
+    }else{
+      getAllPagos().then(response => {
+        setListaPagos(response.pagos);
+      })
+    }
+    /* if(isContable || isAdmin){
       getAllPagos().then(response => {
         setListaPagos(response);
         console.log(response);
       })
-    }else{
-      getPagoByUsuarioId(userId).then(response => {
-        setListaPagos(response);
-        console.log(response);
+    }else{//recordatorio tengo que cambiar el metodo para que sea ids de deudas primero obteniendo las deudas por residencia que es reciedencia x usuario
+      getInmuebleXUsuario(userId).then(response => {
+        const array = Object.values(response).map(obj => obj.id);
+        getDeudaByResidenciaIds(array).then(resp => {
+          const array_deudas = Object.values(resp).map(obj => obj.id);
+          console.log(array_deudas);
+          getPagoByDeudaIds(array_deudas).then(response => {
+            setListaPagos(response);
+            console.log(response);
+          });
+        })
       });
-    }
+    } */
   }, [])
   
   return (
@@ -53,7 +78,7 @@ const PagosList = () => {
         </tr>
       </thead>
       <tbody>
-        {listaPagos.map((item, index) => (
+        {listaPagos && listaPagos.map((item, index) => (
           <tr key={index}>
             <td>{item.deuda_id}</td>
             <td>{item.contable_id ? item.contable_id : "No"}</td>

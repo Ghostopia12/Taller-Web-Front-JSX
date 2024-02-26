@@ -3,7 +3,6 @@ import { Button, Form } from "react-bootstrap";
 import { createPago } from "../../../services/cuentas/PagoService";
 import { GetFromStorage } from "../../../services/StorageService";
 import { Navigate, useParams } from "react-router-dom";
-import { getDeudaById } from "../../../services/cuentas/DeudaService";
 
 const CrearPago = () => {
   const { id } = useParams();//id de la deuda
@@ -33,15 +32,11 @@ const CrearPago = () => {
   };
 
   const handleSubmit = (e) => {
-    //debugger;
     console.log(formData);
-    getDeudaById(id).then((response) => {
-      formData.monto = response.monto;
-      e.preventDefault();
-      var datos = JSON.stringify(formData);
-      createPago(datos).then((response) => {
-          handleResponse(response);
-      });
+    e.preventDefault();
+    var datos = JSON.stringify(formData);
+    createPago(datos).then((response) => {
+        handleResponse(response);
     });
   };
 

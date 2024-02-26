@@ -28,8 +28,8 @@ const ListaResidencias = () => {
                 <tr>
                   <th>Nombre</th>
                   <th>Superficie</th>
-                  <th>Acciones</th>
                   <th>Propietario ID</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>

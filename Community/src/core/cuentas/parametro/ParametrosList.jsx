@@ -16,7 +16,7 @@ const ParametrosList = () => {
       Navigate("/dashboard");
     }
     getAllParametros().then(response => {
-      setListaParametros(response);
+      setListaParametros(response.parametros);
       console.log(response);
     })
     

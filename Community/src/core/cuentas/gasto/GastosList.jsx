@@ -16,7 +16,7 @@ const GastosList = () => {
       Navigate("/dashboard");
     }
     getAllGastos().then(response => {
-      setListaGastos(response);
+      setListaGastos(response.gastos);
       console.log(response);
     })
     

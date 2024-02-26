@@ -23,7 +23,7 @@ const DeudasList = () => {
     const userId = localStorage.getItem("userId");
     if(isContable || isAdmin){
       getAllDeudas().then(response => {
-        setListaDeudas(response);
+        setListaDeudas(response.deudas);
         console.log(response);
       })
     }else{
