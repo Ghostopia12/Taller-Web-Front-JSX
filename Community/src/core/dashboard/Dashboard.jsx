@@ -3,7 +3,7 @@ import { GetFromStorage } from "../../services/StorageService";
 import { getDeudaCanceladaByResidenciaIds } from "../../services/cuentas/DeudaService";
 import { getInmuebleXUsuario, getListaInmuebles } from "../../services/condominioService/InmueblesService";
 import { getListaPersonas } from "../../services/condominioService/PersonasService";
-import { getGastoCanceladoByResidenciaIds } from "../../services/cuentas/GastoService";
+import { getGastoCanceladoByCondominioIds } from "../../services/cuentas/GastoService";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -32,7 +32,37 @@ const Dashboard = () => {
       rolesFromStorage?.length !== 0 && rolesFromStorage.includes("PROPIETARIO")
     );
     const userId = localStorage.getItem("userId");
-    if(isContable || isAdmin){
+    if (rolesFromStorage?.length != 0 && (!rolesFromStorage?.includes("ADMIN") || !rolesFromStorage?.includes("CONTABLE")) ) {
+      getInmuebleXUsuario(userId).then(response => {
+        const array = Object.values(response).map(obj => obj.id);
+        getDeudaCanceladaByResidenciaIds(array, false).then(response => {
+          setListaDeudasPendientes(response);
+          console.log(response);
+        })
+      });
+    }else{
+      console.log("es admin o contable");
+      setIsAdmin(true);
+      getListaInmuebles().then(response => {
+        const array = Object.values(response).map(obj => obj.id);
+        getDeudaCanceladaByResidenciaIds(array, true).then(response => {
+          setListaDeudasPagadas(response);
+          console.log(response);
+        })
+        getDeudaCanceladaByResidenciaIds(array, false).then(response => {
+          setListaDeudasPendientes(response);
+          console.log(response);
+        })
+      });
+      getListaPersonas().then(response => {
+        const array = Object.values(response).map(obj => obj.id);
+        getGastoCanceladoByCondominioIds(array, false).then(response => {
+          setListaGastosPendientes(response);
+          console.log(response);
+        })
+      });
+    }
+/*     if(isContable || isAdmin){
       getListaInmuebles().then(response => {
         const array = Object.values(response).map(obj => obj.id);
         getDeudaCanceladaByResidenciaIds(array, true).then(response => {
@@ -59,7 +89,7 @@ const Dashboard = () => {
           console.log(response);
         })
       });
-    } 
+    }  */
   }, [])
 
   const totalDeudaPagadas = listaDeudasPagadas.reduce((acc, item) => acc + item.monto, 0);
@@ -74,7 +104,7 @@ const Dashboard = () => {
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">Deudas Pendientes</h1>
-            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPagadas}</h2>
+            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPendiente} Bs</h2>
             <Link to="/deudas">
               <Button variant="primary">Ver Detalle</Button>
             </Link>
@@ -84,30 +114,30 @@ const Dashboard = () => {
         </>
       )
       }
-      {isAdmin || isContable &&(
+      {isAdmin &&(
         <>
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">Deudas Pendientes</h1>
-            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPagadas}</h2>
+            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPendiente} Bs</h2>
           </div>
         </div>
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">Deudas Pagadas</h1>
-            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPendiente}</h2>
+            <h2 className="card-subtitle mb-2 text-muted">Total: {totalDeudaPagadas} Bs</h2>
           </div>
         </div>
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">Gastos Pendientes</h1>
-            <h2 className="card-subtitle mb-2 text-muted">Total: {totalGastoPendiente}</h2>
+            <h2 className="card-subtitle mb-2 text-muted">Total: {totalGastoPendiente} Bs</h2>
           </div>
         </div>
         <div className="card">
           <div className="card-body">
             <h1 className="card-title">Dinero Actual</h1>
-            <h2 className="card-subtitle mb-2 text-muted">Total: {dineroActual}</h2>
+            <h2 className="card-subtitle mb-2 text-muted">Total: {dineroActual} Bs</h2>
           </div>
         </div>
         </>

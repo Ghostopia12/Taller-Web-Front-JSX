@@ -45,12 +45,12 @@ const CrearGasto = () => {
 
   return (
     <Form onSubmit={handleSubmit} className="formGasto" style={{ padding: '20px', margin: '20px' }}>
-      <Form.Group controlId="residencia_id">
+      <Form.Group controlId="condominio_id">
         <Form.Label>Condominio ID</Form.Label>
         <Form.Control
           type="number"
-          name="residencia_id"
-          value={formData.residencia_id}
+          name="condominio_id"
+          value={formData.condominio_id}
           onChange={handleChange}
           required
         />

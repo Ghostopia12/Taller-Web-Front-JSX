@@ -21,7 +21,7 @@ import CrearPago from "../core/cuentas/pago/CrearPago";
 import PagosList from "../core/cuentas/pago/PagosList";
 import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
-import CrearParametro from "../core/cuentas/parametro/CrearParametro";
+import FormParametro from "../core/cuentas/parametro/FormParametro";
 import ParametrosList from "../core/cuentas/parametro/ParametrosList";
 import DocumentosListPage from "../core/documentos/DocumentosListPage";
 import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
@@ -62,7 +62,8 @@ const RouterConfig = () => {
       <Route path="/gastos" element={<GastosList />} />
       <Route path="/gastos/crear" element={<CrearGastos />} />
       <Route path="/parametros" element={<ParametrosList />} />
-      <Route path="/parametros/crear" element={<CrearParametro />} />
+      <Route path="/parametros/crear" element={<FormParametro />} />
+      <Route path="/parametros/editar/:id" element={<FormParametro />} />
 
       <Route path="/listaAreasComunes" element={<AreaComunListPage />} />
       <Route path="/crearAreaComun" element={<AreaComunCreatePage />} />
