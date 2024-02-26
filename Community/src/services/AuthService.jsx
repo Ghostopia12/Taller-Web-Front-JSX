@@ -16,6 +16,10 @@ export const login = async (credentials) => {
         ];
       const rolesArray = roles.split(",");
       SaveToStorage("token", response.data.token);
+      const id = jwtDecode(localStorage.getItem("token"))[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ];
+      SaveToStorage("userId", id);
       SaveToStorage("roles", JSON.stringify(rolesArray));
       return response.data.token;
     } else {

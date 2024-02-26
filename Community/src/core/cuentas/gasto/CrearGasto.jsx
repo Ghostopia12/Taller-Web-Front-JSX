@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { createGasto } from "../../../services/cuentas/GastoService";
+import { GetFromStorage } from "../../../services/StorageService";
+import { Navigate } from "react-router-dom";
 
 const CrearGasto = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,14 @@ const CrearGasto = () => {
     concepto: "",
     cancelada: false,
   });
+
+  useEffect(() => {
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

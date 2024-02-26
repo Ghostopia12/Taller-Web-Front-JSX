@@ -1,6 +1,7 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { GetFromStorage } from "../services/StorageService";
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const SisNavbar = () => {
   const [isContable, setIsContable] = useState(false);
@@ -10,10 +11,20 @@ const SisNavbar = () => {
   const [isPropietario, setIsPropietario] = useState(false);
   const [isTrabajador, setIsTrabajador] = useState(false);
   const [roleList, setRoleList] = useState([]);
+  const [userId, setUserId] = useState(1)
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const token = GetFromStorage("token");
+    console.log(token);
+    if (token) {
+      const id = jwtDecode(localStorage.getItem("token"))[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+      ];
+      setUserId(id);
+      console.log(userId);
+    }
     fetchUsersRoles();
   }, []);
 
@@ -53,6 +64,7 @@ const SisNavbar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Inicio</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             {isAdmin && (
               <>
                 <NavDropdown title="Áreas Comunes" id="basic-nav-dropdown">
@@ -66,6 +78,13 @@ const SisNavbar = () => {
                     Lista de Solicitudes
                   </NavDropdown.Item>
                 </NavDropdown>
+                {userId && (
+                  <NavDropdown title="Condominios" id="basic-nav-dropdown">
+                    <NavDropdown.Item href={`/personas/${userId}`}>
+                      Administrar condominio
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
                 <NavDropdown title="Administracion" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/adminPanel">
                     Panel de administracion
@@ -97,15 +116,19 @@ const SisNavbar = () => {
                 </NavDropdown>
               </>
             )}
-            {isContable && (
+            {isPropietario && (
               <NavDropdown title="Cuentas" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
                 <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
-                <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
-                <NavDropdown.Item href="/parametros">
-                  Parametros
-                </NavDropdown.Item>
               </NavDropdown>
+            )}
+            {isContable && (
+              <NavDropdown title="Cuentas" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/deudas">Deudas</NavDropdown.Item>
+              <NavDropdown.Item href="/pagos">Pagos</NavDropdown.Item>
+              <NavDropdown.Item href="/gastos">Gastos</NavDropdown.Item>
+              <NavDropdown.Item href="/parametros">Parametros</NavDropdown.Item>
+            </NavDropdown>
             )}
             {isGuardia && <Nav.Link href="/guardia">Guardia</Nav.Link>}
             {isResidente && (

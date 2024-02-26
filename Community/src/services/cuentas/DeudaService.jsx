@@ -29,3 +29,29 @@ export const getDeudaByResidenciaId = async (id) => {
   );
   return response.data;
 };
+
+export const getDeudaByResidenciaIds = async (ids) => {
+  try {
+    const response = await axios.post(
+      'http://localhost:8080/api/deudas/residencia/deudas?role=1',
+      ids
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener las deudas por IDs de residencia:', error);
+    throw error;
+  }
+};
+
+export const getDeudaCanceladaByResidenciaIds = async (ids, cancelada) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:8080/api/deudas/residencia/deudas-canceladas?cancelada=${cancelada}`,
+      ids
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};

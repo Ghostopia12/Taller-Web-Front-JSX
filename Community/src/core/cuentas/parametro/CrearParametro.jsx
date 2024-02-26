@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { createParametro } from "../../../services/cuentas/ParametroService";
+import { GetFromStorage } from "../../../services/StorageService";
+import { Navigate } from "react-router-dom";
 
 const CrearParametro = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,14 @@ const CrearParametro = () => {
     activo: false,
     tipo: "",
   });
+
+  useEffect(() => {
+    const roleList = GetFromStorage("roles");
+    if (roleList?.length != 0 && (!roleList?.includes("ADMIN") || !roleList?.includes("CONTABLE")) ) {
+      //Not an admin, get out!
+      Navigate("/dashboard");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

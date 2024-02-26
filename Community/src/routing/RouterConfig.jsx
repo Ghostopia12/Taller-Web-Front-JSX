@@ -17,7 +17,7 @@ import SolicitudListPage from "../core/solicitudes/SolicitudListPage";
 import SolicitudCreatePage from "../core/solicitudes/SolicitudCreatePage";
 import SolicitudDetailPage from "../core/solicitudes/SolicitudDetailPage";
 import DeudasList from "../core/cuentas/deuda/DeudasList";
-import CrearPagos from "../core/cuentas/pago/CrearPago";
+import CrearPago from "../core/cuentas/pago/CrearPago";
 import PagosList from "../core/cuentas/pago/PagosList";
 import CrearGastos from "../core/cuentas/gasto/CrearGasto";
 import GastosList from "../core/cuentas/gasto/GastosList";
@@ -27,6 +27,21 @@ import DocumentosListPage from "../core/documentos/DocumentosListPage";
 import DocumentosFormPage from "../core/documentos/DocumentosFormPage";
 import CatalogosListPage from "../core/catalogos/CatalogosListPage";
 import CatalogosFormPage from "../core/catalogos/CatalogosFormPage";
+import PersonaListPage from "../core/condominios/PersonaListPage";
+import PersonaFormPage from "../core/condominios/PersonaFormPage";
+import CondominioEditPage from "../core/condominios/CondominioEditPage";
+import BloqueListPage from "../core/condominios/BloqueListPage";
+import BloqueFormPage from "../core/condominios/BloqueFormPage";
+import PisoListPage from "../core/condominios/PisoListPage";
+import PisoFormPage from "../core/condominios/PisoFormPage";
+import DptoListPage from "../core/condominios/DptoListPage";
+import DptoFormPage from "../core/condominios/DptoFormPage";
+import ManzanaListPage from "../core/condominios/ManzanaListPage";
+import ManzanaFormPage from "../core/condominios/ManzanaFormPage";
+import LoteListPage from "../core/condominios/LoteListPage";
+import LoteFormPage from "../core/condominios/LoteFormPage";
+import DeudasResidencia from "../core/cuentas/deuda/DeudasResidencia";
+import ListaResidencias from "../core/cuentas/pago/ListaResidencias";
 
 const RouterConfig = () => {
   return (
@@ -35,10 +50,13 @@ const RouterConfig = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/adminPanel" element={<AdminPanel />} />
+
       <Route path="/deudas" element={<DeudasList />} />
       <Route path="/deudas/crear" element={<CrearDeuda />} />
+      <Route path="/deudas/residencia/:id" element={<DeudasResidencia/>} />
+      <Route path="/pago/residencia/:id" element={<CrearPago/>} />
+      <Route path="/pagos/listaxpagar" element={<ListaResidencias />} />
       <Route path="/pagos" element={<PagosList />} />
-      <Route path="/pagos/crear" element={<CrearPagos />} />
       <Route path="/gastos" element={<GastosList />} />
       <Route path="/gastos/crear" element={<CrearGastos />} />
       <Route path="/parametros" element={<ParametrosList />} />
@@ -65,7 +83,23 @@ const RouterConfig = () => {
       <Route path="/listaCatalogos" element={<CatalogosListPage />} />
       <Route path="/crearCatalogo" element={<CatalogosFormPage />} />
       <Route path="/editarCatalogo/:id" element={<CatalogosFormPage />} />
-      
+
+
+      <Route path="/personas/:id" element={<PersonaListPage/>} />
+      <Route path="/personas/create/:id" element={<PersonaFormPage/>} />
+      <Route path="/condominio/edit/:id" element={<CondominioEditPage/>} />
+      <Route path="/bloque/list/:id" element={<BloqueListPage/>} />
+      <Route path="/bloques/create/:id" element={<BloqueFormPage/>} />
+      <Route path="/pisos/list/:id" element={<PisoListPage/>} />
+      <Route path="/pisos/create/:id" element={<PisoFormPage/>} />
+      <Route path="/dpto/list/:id" element={<DptoListPage/>} />
+      <Route path="/dpto/create/:id" element={<DptoFormPage/>} />
+      <Route path="/manzana/list/:id" element={<ManzanaListPage/>} />
+      <Route path="/manzanas/create/:id" element={<ManzanaFormPage/>} />
+      <Route path="lote/list/:id" element={<LoteListPage/>} />
+      <Route path="lotes/create/:id" element={<LoteFormPage/>} />
+
+
     </Routes>
   );
 };
